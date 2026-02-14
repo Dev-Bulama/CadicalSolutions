@@ -1,5 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+"use client"
+
 import Link from "next/link"
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 
 const services = [
   { title: "Consultations", description: "Expert medical consultations across crucial health departments with international collaboration.", icon: "💬", slug: "consultations" },
@@ -12,32 +14,12 @@ const services = [
   { title: "Referrals", description: "Professional referral services connecting you with expert healthcare networks.", icon: "🤝", slug: "referrals" },
 ]
 
-
-export function ServicesSection() {
+export default function ServicesOverviewPage() {
   return (
-    <section id="services" className="py-20 md:py-32 bg-muted/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center space-y-4 mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold">Our Services</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Comprehensive healthcare solutions tailored to meet your medical needs
-          </p>
-        </div>
+    <div className="min-h-screen p-8 bg-background">
+      <h1 className="text-5xl font-bold text-center mb-12">Our Services</h1>
 
-        {/* <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((service, index) => (
-            <Card key={index} className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="text-4xl mb-4">{service.icon}</div>
-                <CardTitle>{service.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">{service.description}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div> */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {services.map((service) => (
           <Link key={service.slug} href={`/services/${service.slug}`} className="group">
             <Card className="transition-transform transform hover:scale-105 hover:shadow-xl hover:bg-primary/5 cursor-pointer">
@@ -52,8 +34,6 @@ export function ServicesSection() {
           </Link>
         ))}
       </div>
-
-      </div>
-    </section>
+    </div>
   )
 }
