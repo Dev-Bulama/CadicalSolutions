@@ -3,7 +3,7 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import jwt from "jsonwebtoken";
 import { openAPI } from "better-auth/plugins";
 import { admin } from "better-auth/plugins";
-import {prisma} from "./prisma";
+import prisma from "./prisma";
 
 // ─────────────────────────────
 // 🔐 JWT CONFIG (for mobile clients)

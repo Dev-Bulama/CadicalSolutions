@@ -53,25 +53,17 @@ export function Footer() {
             <h4 className="font-semibold mb-4">Company</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href="#" className="hover:text-primary">
+                <Link href="/about" className="hover:text-primary">
                   About
                 </Link>
               </li>
+              
               <li>
-                <Link href="#" className="hover:text-primary">
-                  Careers
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary">
+                <Link href="/contact" className="hover:text-primary">
                   Contact
                 </Link>
               </li>
-              <li>
-                <Link href="#" className="hover:text-primary">
-                  Blog
-                </Link>
-              </li>
+              
             </ul>
           </div>
 
@@ -79,20 +71,16 @@ export function Footer() {
             <h4 className="font-semibold mb-4">Legal</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href="#" className="hover:text-primary">
+                <Link href="/privacy-policy" className="hover:text-primary">
                   Privacy
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-primary">
+                <Link href="/terms" className="hover:text-primary">
                   Terms
                 </Link>
               </li>
-              <li>
-                <Link href="#" className="hover:text-primary">
-                  Policy
-                </Link>
-              </li>
+              
             </ul>
           </div>
         </div>
