@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 import { useState } from "react"
 import Image from "next/image"
+import AuthButtons from "./auth-buttons"
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -42,14 +43,15 @@ export function Navbar() {
           </div>
 
           {/* Auth Buttons */}
-          <div className="hidden md:flex items-center gap-3">
+          <AuthButtons />
+          {/* <div className="hidden md:flex items-center gap-3">
             <Button variant="outline" asChild>
               <Link href="/auth/login">Sign In</Link>
             </Button>
             <Button asChild>
               <Link href="/auth/register">Register</Link>
             </Button>
-          </div>
+          </div> */}
 
           {/* Mobile Menu Button */}
           <button className="md:hidden" onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
@@ -69,14 +71,15 @@ export function Navbar() {
             <Link href="#contact" className="block text-sm font-medium hover:text-primary py-2">
               Contact
             </Link>
-            <div className="pt-3 space-y-2 border-t border-border">
+            {/* <div className="pt-3 space-y-2 border-t border-border">
               <Button variant="outline" asChild className="w-full bg-transparent">
                 <Link href="/auth/login">Sign In</Link>
               </Button>
               <Button asChild className="w-full">
                 <Link href="/auth/register">Register</Link>
               </Button>
-            </div>
+            </div> */}
+            <AuthButtons />
           </div>
         )}
       </div>

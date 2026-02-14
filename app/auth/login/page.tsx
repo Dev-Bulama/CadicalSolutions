@@ -28,26 +28,25 @@ export default function LoginPage() {
 
     try {
       const response = await authClient.signIn.email({
-         email, password
+         email, password,
+         rememberMe: true,
+         callbackURL: "/dashboard"
       })
-      // await fetch("/api/auth/sign-in", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({ email, password }),
-      // })
+      
 
       if (!response) {
         throw new Error("Invalid credentials")
       }
 
-      const data = await response.data?.user;
+      
+      // const data = await response.data?.user;
 
       // Redirect based on role
-      if (data?.name === "SUPER_ADMIN") {
-        router.push("/admin/dashboard")
-      } else {
-        router.push("/clinician/profile")
-      }
+      // if (data?.name === "SUPER_ADMIN") {
+      //   router.push("/admin/dashboard")
+      // } else {
+      //   router.push("/clinician/profile")
+      // }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed")
     } finally {
