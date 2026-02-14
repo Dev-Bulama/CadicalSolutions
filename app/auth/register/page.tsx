@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { authClient } from "@/lib/auth-client"
+import Image from "next/image"
 // import { Alert, AlertDescription } from "@/components/ui/alert"
 // import { AlertCircle, CheckCircle2 } from "lucide-react"
 // import { auth } from "@/lib/auth"
@@ -157,9 +158,15 @@ export default function RegisterPage() {
         {/* Logo */}
         <div className="text-center space-y-2">
           <div className="flex justify-center mb-4">
-            <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+            {/* <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-2xl">C</span>
-            </div>
+            </div> */}
+            <Image
+              src={'/images/logo.png'} 
+              alt="logo"
+              width={6} height={6} 
+              className="w-8 h-8 rounded-lg flex items-center justify-center" 
+              />
           </div>
           <h1 className="text-3xl font-bold">Join Cadical Solutions</h1>
           <p className="text-muted-foreground">Register as a healthcare professional</p>
