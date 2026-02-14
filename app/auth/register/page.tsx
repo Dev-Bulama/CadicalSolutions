@@ -73,7 +73,7 @@ export default function RegisterPage() {
       !formData.firstName ||
       !formData.lastName ||
       !formData.specialization ||
-      !formData.licenseNumber ||
+      // !formData?.licenseNumber ||
       !formData.yearsOfExperience
     ) {
       setError("Please fill in all required fields")
@@ -120,7 +120,7 @@ export default function RegisterPage() {
         throw new Error("Failed to create account")
       }
 
-      const userData = await userResponse.data?.user;
+      const userData =  userResponse.data?.user;
 
       // Create clinician profile
       const clinicianResponse = await fetch("/api/clinician/register", {
@@ -131,7 +131,7 @@ export default function RegisterPage() {
           firstName: formData.firstName,
           lastName: formData.lastName,
           specialization: formData.specialization,
-          licenseNumber: formData.licenseNumber,
+          licenseNumber: formData?.licenseNumber || null,
           yearsOfExperience: Number.parseInt(formData.yearsOfExperience),
           bio: formData.bio,
         }),
@@ -303,14 +303,15 @@ export default function RegisterPage() {
 
                   <div className="space-y-2">
                     <label htmlFor="licenseNumber" className="text-sm font-medium">
-                      License Number
+                      License Number (optional)
                     </label>
                     <Input
+                    type="text"
                       id="licenseNumber"
-                      placeholder="LIC-001234"
+                      placeholder="LIC-001234 (Optional)"
                       value={formData.licenseNumber}
                       onChange={(e) => setFormData({ ...formData, licenseNumber: e.target.value })}
-                      required
+                      // required={false}
                       disabled={isLoading}
                     />
                   </div>
