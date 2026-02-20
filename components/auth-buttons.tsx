@@ -33,10 +33,10 @@ export default function AuthButtons() {
 	return !session ? (
 		// <div className="w-full md:w-1/2 grid justify-start md:flex gap-2 md:items-center md:justify-center md:pl-6 ">
 		<div className="flex items-center gap-2 justify-start">
-			<Link href="/login" className="w-full ">
+			<Link href="/auth/login" className="w-full ">
 				<Button className="w-full">Log In</Button>
 			</Link>
-			<Link href="/register" className="w-full ">
+			<Link href="/auth/register" className="w-full ">
 				<Button className="w-full">Register</Button>
 			</Link>
 		</div>
