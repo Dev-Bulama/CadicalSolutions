@@ -59,16 +59,16 @@ export function Navbar() {
             Pharmaceuticals
           </Link>
         </div>
-            <Link href="#services" className="text-sm font-medium hover:text-primary transition">
+            {/* <Link href="#services" className="text-sm font-medium hover:text-primary transition">
               Services
-            </Link>
+            </Link> */}
             <Link href="#features" className="text-sm font-medium hover:text-primary transition">
               About
             </Link>
             <Link href="#contact" className="text-sm font-medium hover:text-primary transition">
               Contact
             </Link>
-            <div>
+            <div className="flex items-center">
             <Link
             href="/cart"
             className="relative p-2 hover:bg-muted rounded-lg transition-colors duration-200 group"
@@ -107,9 +107,9 @@ export function Navbar() {
         {/* Mobile Menu */}
         {isOpen && (
           <div className="md:hidden border-t border-border py-4 space-y-3">
-            <Link href="#services" className="block text-sm font-medium hover:text-primary py-2">
+            {/* <Link href="#services" className="block text-sm font-medium hover:text-primary py-2">
               Services
-            </Link>
+            </Link> */}
             <Link href="#features" className="block text-sm font-medium hover:text-primary py-2">
               About
             </Link>
