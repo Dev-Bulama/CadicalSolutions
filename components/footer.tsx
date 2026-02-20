@@ -6,7 +6,7 @@ export function Footer() {
   return (
     <footer className="bg-card border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid md:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
               {/* <div className="w-6 h-6 bg-primary rounded flex items-center justify-center">
@@ -22,7 +22,7 @@ export function Footer() {
             </div>
             <p className="text-sm text-muted-foreground">Health is life, protect yours with us.</p>
           </div>
-
+          {/* <div className="grid grid-col-1 md:grid-cols-3 gap-4"> */}
           <div>
             <h4 className="font-semibold mb-4">Services</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
@@ -83,6 +83,7 @@ export function Footer() {
               
             </ul>
           </div>
+          {/* </div> */}
         </div>
 
         <div className="border-t border-border pt-8 flex justify-between items-center text-sm text-muted-foreground">
