@@ -1,0 +1,52 @@
+import { motion } from "framer-motion";
+
+export default  function Hero () {
+    return (
+       
+      <section className="min-h-screen bg-[#0d47a1] pt-32 pb-20 px-6 md:px-12 relative overflow-hidden">
+
+        {/* grid pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:60px_60px]"></div>
+
+        {/* radial accents */}
+        <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(245,166,35,0.12)_0%,transparent_70%)]"></div>
+        <div className="absolute -bottom-24 -left-24 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(255,255,255,0.04)_0%,transparent_70%)]"></div>
+
+        <div className="relative z-10 max-w-2xl">
+
+          <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} className="inline-block text-[#F5A623] text-xs font-semibold tracking-widest uppercase border border-[#F5A623]/30 bg-[#F5A623]/10 px-4 py-1 rounded-full mb-6">
+            🇳🇬 Nigeria's Healthcare Supply Partner
+          </motion.div>
+
+          <motion.h1 initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} className="text-white text-5xl md:text-6xl font-bold leading-tight font-serif mb-5">
+            Your health<br/>deserves better<br/><span className="text-[#F5A623]">supply.</span>
+          </motion.h1>
+
+          <motion.p initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} className="text-white/70 text-lg leading-relaxed mb-10 max-w-xl">
+            Medical equipment, pharmaceutical products and specialist services — delivered reliably to hospitals, clinics and individuals across Nigeria.
+          </motion.p>
+
+          <div className="flex flex-wrap gap-3">
+            <button className="bg-[#F5A623] text-white px-6 py-3 rounded font-semibold">Shop Pharmacy</button>
+            <button className="bg-white text-[#1565C0] px-6 py-3 rounded font-semibold">Order Supplies</button>
+            <button className="border border-white/30 text-white px-6 py-3 rounded font-semibold">Our Services</button>
+          </div>
+        </div>
+
+        {/* stats */}
+        <div className="relative z-10 mt-20 border-t border-white/10 pt-10 flex flex-wrap gap-10">
+          {[
+            ["10+","Active clients served"],
+            ["3+","Years in Nigerian healthcare"],
+            ["24hr","Service response time"],
+            ["100%","Certified products only"]
+          ].map((s,i)=>(
+            <div key={i}>
+              <div className="text-white text-3xl font-bold font-serif">{s[0]}</div>
+              <div className="text-white/50 text-xs">{s[1]}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )
+}
