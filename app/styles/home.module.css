@@ -1,0 +1,307 @@
+/* ================= VARIABLES (scoped fallback) ================= */
+.container {
+  --blue: #1565C0;
+  --blue-dark: #0d47a1;
+  --blue-light: #e8f1fb;
+  --gold: #F5A623;
+  --white: #ffffff;
+  --off: #f8fafc;
+  --text: #1a2332;
+  --muted: #6b7c93;
+  --border: #e4eaf2;
+}
+
+/* ================= BASE ================= */
+.page {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  background: var(--white);
+  overflow-x: hidden;
+}
+
+.section {
+  padding: 80px 48px;
+}
+
+.sectionOff {
+  background: var(--off);
+}
+
+.sectionWhite {
+  background: white;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 52px;
+}
+
+.tag {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--blue);
+  font-weight: 600;
+}
+
+.h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  margin-top: 10px;
+}
+
+.pMuted {
+  color: var(--muted);
+  max-width: 520px;
+  margin: 10px auto 0;
+  line-height: 1.7;
+}
+
+/* ================= NAV ================= */
+.nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 68px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 48px;
+  background: rgba(255,255,255,0.96);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  z-index: 100;
+}
+
+.navLogo {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.logoBox {
+  width: 36px;
+  height: 36px;
+  background: var(--blue);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+}
+
+.navLinks {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.navLinks a {
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.navLinks a:hover {
+  color: var(--blue);
+}
+
+.navCta {
+  display: flex;
+  gap: 10px;
+}
+
+/* ================= BUTTONS ================= */
+.btn {
+  padding: 10px 22px;
+  border-radius: 6px;
+  font-size: 13.5px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btnPrimary {
+  background: var(--blue);
+  color: white;
+}
+
+.btnPrimary:hover {
+  background: var(--blue-dark);
+}
+
+.btnOutline {
+  border: 1.5px solid var(--blue);
+  color: var(--blue);
+  background: transparent;
+}
+
+.btnOutline:hover {
+  background: var(--blue);
+  color: white;
+}
+
+.btnGold {
+  background: var(--gold);
+  color: white;
+}
+
+.btnWhite {
+  background: white;
+  color: var(--blue);
+}
+
+.btnLg {
+  padding: 14px 32px;
+}
+
+/* ================= HERO ================= */
+.hero {
+  min-height: 100vh;
+  background: var(--blue-dark);
+  padding: 120px 48px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.heroTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 58px;
+  color: white;
+  line-height: 1.1;
+}
+
+.heroTitle span {
+  color: var(--gold);
+}
+
+.heroText {
+  color: rgba(255,255,255,0.75);
+  max-width: 520px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  line-height: 1.8;
+}
+
+.heroBtns {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.heroStats {
+  margin-top: 70px;
+  display: flex;
+  gap: 48px;
+}
+
+.statNum {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  color: white;
+}
+
+.statLabel {
+  color: rgba(255,255,255,0.5);
+  font-size: 12px;
+}
+
+/* ================= GRID ================= */
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ================= CARDS ================= */
+.card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* portal icons */
+.iconGold { background: #fff8ec; }
+.iconBlue { background: var(--blue-light); }
+.iconGreen { background: #edf7f0; }
+
+/* ================= WHY SECTION ================= */
+.whyGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.whyPoint {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.whyIcon {
+  width: 40px;
+  height: 40px;
+  background: var(--blue-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+/* ================= PROCESS ================= */
+.process {
+  background: var(--blue-dark);
+  color: white;
+}
+
+.processGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* ================= FOOTER ================= */
+.footer {
+  background: #1a2332;
+  color: white;
+  padding: 40px 48px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+
+.footerLinks a {
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+}

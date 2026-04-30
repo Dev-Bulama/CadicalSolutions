@@ -8,6 +8,7 @@ import { ProductCard } from '@/components/product-card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Search, Filter, X } from 'lucide-react'
+import { ProductNavbar } from '@/components/product-navbar'
 // import { Navbar } from '@/components/navbar'
 
 interface Product {
@@ -70,7 +71,7 @@ function ProductsContent() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      {/* <Navbar /> */}
+      <ProductNavbar />
 
       {/* Page Header */}
       <section className="bg-gradient-to-r from-primary/10 to-secondary/10 border-b border-border">

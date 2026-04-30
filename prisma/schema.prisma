@@ -171,6 +171,44 @@ model OrderItem {
   createdAt DateTime @default(now())
 }
 
+model Booking {
+  id            String   @id @default(cuid())
+
+  service       String
+
+  equipmentType String?
+  issueType     String?
+  urgency       String?
+
+  consultType   String?
+  format        String?
+
+  callerType    String
+
+  firstName     String
+  lastName      String
+  orgName       String?
+  role          String?
+
+  phone         String
+  email         String
+  location      String
+
+  bookingType   String
+
+  prefDate      String?
+  selectedSlot  String?
+
+  callbackDate  String?
+  callWindow    String?
+  callbackPhone String?
+
+  notes         String?
+
+  ref           String   @unique
+  createdAt     DateTime @default(now())
+}
+
 
 enum ServiceCategory {
   CONSULTATIONS
