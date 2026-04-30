@@ -12,6 +12,7 @@ export function Navbar() {
 
       {/* LEFT LOGO */}
       <div className="flex items-center gap-3">
+        <Link href="/">
         <Image
           src={"/images/logo.png"}
           alt="logo"
@@ -19,6 +20,7 @@ export function Navbar() {
           height={32}
           className="w-8 h-8 rounded-lg"
         />
+        </Link>
 
         <div className="leading-tight">
           <div className="text-[#1565C0] text-sm font-semibold">
