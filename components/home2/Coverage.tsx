@@ -5,7 +5,7 @@ import { fadeUp } from "@/lib/animations";
 
 export default function Coverage() {
   return (
-    <section className="bg-teal-deep text-white px-5 py-20">
+    <section className="bg-teal-700 text-white px-5 py-20">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10">
 
         <motion.div 

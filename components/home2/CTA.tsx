@@ -1,6 +1,6 @@
 export default function CTA() {
   return (
-    <section id="contact" className="bg-teal-deep text-white py-20 px-5 text-center">
+    <section id="contact" className="bg-teal-900 text-white py-20 px-5 text-center">
       <div className="max-w-3xl mx-auto">
         <h2 className="font-serif text-4xl mb-4">
           Ready to work <span className="italic text-teal-soft">with Cadical?</span>

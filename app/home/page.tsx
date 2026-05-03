@@ -14,7 +14,7 @@ import Consent from "@/components/home2/Consent";
 export default function Home() {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <main>
         <Hero />
         <Trust />
