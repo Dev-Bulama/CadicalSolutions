@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 
 export default function Services() {
@@ -16,7 +17,7 @@ export default function Services() {
             <p className="text-[#6b7c93] mb-4">
               On-site servicing, calibration and repair of medical equipment.
             </p>
-            <button className="bg-[#1565C0] text-white px-4 py-2 rounded-md">Request Service</button>
+            <Link href={'/booking'} className="bg-[#1565C0] text-white px-4 py-2 rounded-md">Request Service</Link>
           </div>
 
           <div className="bg-white border rounded-xl p-8 hover:shadow-lg">
@@ -25,7 +26,7 @@ export default function Services() {
             <p className="text-[#6b7c93] mb-4">
               Advice for hospitals, clinics and individuals on procurement.
             </p>
-            <button className="bg-[#1565C0] text-white px-4 py-2 rounded-md">Book Consultation</button>
+            <Link href={'/booking'} className="bg-[#1565C0] text-white px-4 py-2 rounded-md">Book Consultation</Link>
           </div>
 
         </div>

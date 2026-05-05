@@ -24,7 +24,8 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             className="inline-block text-[#F5A623] text-xs font-semibold tracking-widest uppercase border border-[#F5A623]/30 bg-[#F5A623]/10 px-4 py-1 rounded-full mb-6"
           >
-            🇳🇬 Nigeria's Healthcare Supply Partner
+            🇳🇬 Reliable Healthcare supply
+            
           </motion.div>
 
           <motion.h1
@@ -32,7 +33,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             className="text-white text-5xl md:text-6xl font-bold leading-tight font-serif mb-5"
           >
-            Your health<br />deserves better<br />
+            delivered with<br />care.<br />
             <span className="text-[#F5A623]">supply.</span>
           </motion.h1>
 
@@ -41,7 +42,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             className="text-white/70 text-lg leading-relaxed mb-10"
           >
-            Medical equipment, pharmaceutical products and specialist services — delivered reliably to hospitals, clinics and individuals across Nigeria.
+            Medical equipment, pharmaceutical products and specialist services for hospitals, clinics, and individuals across Nigeria.
           </motion.p>
 
           <div className="flex flex-wrap gap-3">

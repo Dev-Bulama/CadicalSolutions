@@ -53,24 +53,27 @@ export function Footer() {
   return (
     <footer className="bg-card border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
               {/* <div className="w-6 h-6 bg-primary rounded flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-sm">C</span>
               </div> */}
+              <Link href={'/'} className="flex items-center gap-2">
                <Image
                   src={'/images/logo.png'} 
                   alt="logo"
                   width={6} height={6} 
                   className="w-8 h-8 rounded-lg flex items-center justify-center" 
                   />
+              
               <span className="font-bold">Cadical Solutions</span>
+              </Link>
             </div>
             <p className="text-sm text-muted-foreground">Health is life, protect yours with us.</p>
           </div>
-          {/* <div className="grid grid-col-1 md:grid-cols-3 gap-4"> */}
-          <div>
+          
+          {/* <div>
             <h4 className="font-semibold mb-4">Services</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
@@ -88,13 +91,8 @@ export function Footer() {
                   Diagnostics
                 </Link>
               </li>
-              {/* <li>
-                <Link href="/services/emergency-services" className="hover:text-primary">
-                  Emergency
-                </Link>
-              </li> */}
             </ul>
-          </div>
+          </div> */}
 
           <div>
             <h4 className="font-semibold mb-4">Company</h4>
@@ -134,7 +132,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-border pt-8 flex justify-between items-center text-sm text-muted-foreground">
-          <p>&copy; 2025 Cadical Solutions Limited. All rights reserved.</p>
+          
           <div className="flex gap-4">
             <Link href="https://www.instagram.com/cadicalsolutions" className="hover:text-primary">
               <Image src={'/images/instagram.png'} width={20} height={20} alt="instagram" />
@@ -149,6 +147,8 @@ export function Footer() {
               <Image src={'/images/facebook.png'} width={20} height={20} alt="facebook" />
             </Link>
           </div>
+
+          <p>&copy; 2025 Cadical Solutions Limited. All rights reserved.</p>
         </div>
       </div>
     </footer>
