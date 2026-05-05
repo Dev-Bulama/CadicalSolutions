@@ -1,5 +1,7 @@
+import { Navbar } from "@/components/navbar";
 import "./globals.css";
 import { Manrope, Fraunces } from "next/font/google";
+import { Footer } from "@/components/footer";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
 const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-serif" });
@@ -14,7 +16,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${manrope.variable} ${fraunces.variable}`}>
       <body className="bg-[#FBFAF7] text-[#1A1A18] font-sans">
+        <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

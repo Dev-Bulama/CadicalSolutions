@@ -38,6 +38,7 @@ export function Navbar() {
         <a href="#services" className="hover:text-[#1565C0]">Services</a>
         <a href="#why" className="hover:text-[#1565C0]">Why Cadical</a>
         <a href="#contact" className="hover:text-[#1565C0]">Contact</a>
+        <a href="#compliance" className="hover:text-[#1565C0]">Compliance</a>
       </div>
 
       {/* DESKTOP CTA */}
@@ -71,6 +72,7 @@ export function Navbar() {
             <a href="#services" onClick={() => setOpen(false)}>Services</a>
             <a href="#why" onClick={() => setOpen(false)}>Why Cadical</a>
             <a href="#contact" onClick={() => setOpen(false)}>Contact</a>
+            <a href="#compliance" onClick={() => setOpen(false)}>Compliance</a>
           </div>
 
           <div className="flex flex-col gap-3 px-6 pb-5">
