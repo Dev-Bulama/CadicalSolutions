@@ -1,3 +1,4 @@
+import Image from "next/image";
 
 
 export default function Why() {
@@ -26,8 +27,8 @@ export default function Why() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="col-span-2 bg-[#1565C0] text-white p-6 rounded-xl">
+          <div className="grid grid-cols-1 gap-4">
+            {/* <div className="col-span-2 bg-[#1565C0] text-white p-6 rounded-xl">
               <div className="text-3xl font-serif text-[#F5A623] font-bold">850M+</div>
               <div className="text-sm">People globally living with kidney disease</div>
             </div>
@@ -38,7 +39,8 @@ export default function Why() {
             <div className="bg-[#f8fafc] p-6 rounded-xl border">
               <div className="text-2xl text-[#1565C0] font-bold">$4B+</div>
               <div className="text-sm">Market size</div>
-            </div>
+            </div> */}
+            <Image src='/test.jpeg' alt="Why Cadical" width={500} height={500} className="rounded-xl object-cover" />
           </div>
 
         </div>

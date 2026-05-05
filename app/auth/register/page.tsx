@@ -117,26 +117,26 @@ export default function RegisterPage() {
         toast.error("Failed to create account")
       }
 
-      const userData =  userResponse.data?.user;
+      // const userData =  userResponse.data?.user;
 
       // Create clinician profile
-      const clinicianResponse = await fetch("/api/clinician/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: userData?.id,
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          specialization: formData.specialization,
-          licenseNumber: formData?.licenseNumber || null,
-          yearsOfExperience: Number.parseInt(formData.yearsOfExperience),
-          bio: formData.bio,
-        }),
-      })
+      // const clinicianResponse = await fetch("/api/clinician/register", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({
+      //     userId: userData?.id,
+      //     firstName: formData.firstName,
+      //     lastName: formData.lastName,
+      //     specialization: formData.specialization,
+      //     licenseNumber: formData?.licenseNumber || null,
+      //     yearsOfExperience: Number.parseInt(formData.yearsOfExperience),
+      //     bio: formData.bio,
+      //   }),
+      // })
 
-      if (!clinicianResponse.ok) {
-        throw new Error("Failed to create clinician profile")
-      }
+      // if (!clinicianResponse.ok) {
+      //   throw new Error("Failed to create clinician profile")
+      // }
 
       setSuccess("Registration successful! Redirecting to your profile...")
       // setTimeout(() => {
