@@ -10,9 +10,11 @@ import Process from "@/components/home/process";
 import Services from "@/components/home/services";
 import Why from "@/components/home/why";
 import { ProductCard } from "@/components/product-card";
+import { useCart } from "@/context/cart-context";
 // import Compliance from "@/components/home/compliance";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { toast } from 'sonner'
 
 interface Product {
   id: string
@@ -30,6 +32,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
+  const { addToCart } = useCart()
   useEffect(() => {
     // Fetch products from the API
     fetch('/api/products')
@@ -75,9 +78,19 @@ export default function Home() {
             category={product.category}
             stock={product.stock}
             image={product.image}
-            onAddToCart={function (productId: string): void {
-              throw new Error("Function not implemented.");
-            }}
+            onAddToCart={() => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      category: product.category,
+      image: product.image,
+    })
+
+    toast.success(
+      `${product.name} added to cart`
+    )
+  }}
           />
         ))}
       </div>

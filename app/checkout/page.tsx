@@ -8,6 +8,10 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { toast } from 'sonner'
 import { CreditCard, Truck, CheckCircle, Lock, ArrowLeft } from 'lucide-react'
+import {
+  useFlutterwave,
+  closePaymentModal,
+} from 'flutterwave-react-v3'
 
 export default function CheckoutPage() {
   const [step, setStep] = useState<'shipping' | 'payment' | 'confirmation'>('shipping')
@@ -40,23 +44,145 @@ export default function CheckoutPage() {
     setStep('payment')
   }
 
-  const handleFlutterwavePayment = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsProcessing(true)
+  const config = {
+  public_key:
+    process.env
+      .NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY!,
+      
+  tx_ref: Date.now().toString(),
 
-    try {
-      // Simulate Flutterwave payment
-      // In production, you'd use the actual Flutterwave SDK
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+  amount: orderTotal,
 
-      toast.success('Payment processed successfully!')
-      setStep('confirmation')
-    } catch (error) {
-      toast.error('Payment failed. Please try again.')
-    } finally {
-      setIsProcessing(false)
-    }
+  currency: 'NGN',
+
+  payment_options:
+    'card, banktransfer, ussd',
+
+  customer: {
+    email: formData.email,
+    phone_number: formData.phone,
+    name: `${formData.firstName} ${formData.lastName}`,
+  },
+
+  customizations: {
+    title: 'Cadical Store',
+    description: 'Payment for medical products',
+    logo: '/logo.png',
+  },
+}
+
+  const handleFlutterPayment =
+  useFlutterwave(config)
+  // const handleFlutterwavePayment = async (e: React.FormEvent) => {
+  //   e.preventDefault()
+  //   setIsProcessing(true)
+
+  //   try {
+  //     // Simulate Flutterwave payment
+  //     // In production, you'd use the actual Flutterwave SDK
+  //     // await new Promise((resolve) => setTimeout(resolve, 2000))
+  //     const handleFlutterPayment = useFlutterwave(config)
+
+  //     toast.success('Payment processed successfully!')
+  //     setStep('confirmation')
+  //   } catch (error) {
+  //     toast.error('Payment failed. Please try again.')
+  //   } finally {
+  //     setIsProcessing(false)
+  //   }
+  // }
+
+  const handleFlutterwavePayment = async (
+  e: React.FormEvent
+) => {
+  e.preventDefault()
+
+  try {
+    handleFlutterPayment({
+      callback: async (response) => {
+        console.log('FLW RESPONSE:', response)
+
+        // make sure transaction exists
+        if (!response.transaction_id) {
+          toast.error(
+            'No transaction ID returned'
+          )
+
+          closePaymentModal()
+
+          return
+        }
+
+        try {
+          const verifyResponse = await fetch(
+            '/api/verify-payment',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type':
+                  'application/json',
+              },
+              body: JSON.stringify({
+                transaction_id:
+                  response.transaction_id,
+              }),
+            }
+          )
+
+          if (!verifyResponse.ok) {
+            throw new Error(
+              'Verification failed'
+            )
+          }
+
+          const data =
+            await verifyResponse.json()
+
+          console.log(
+            'VERIFY RESPONSE:',
+            data
+          )
+
+          if (
+            data.status === 'success'
+          ) {
+            toast.success(
+              'Payment successful!'
+            )
+
+            setStep(
+              'confirmation'
+            )
+          } else {
+            toast.error(
+              'Payment verification failed'
+            )
+          }
+        } catch (error) {
+          console.error(error)
+
+          toast.error(
+            'Error verifying payment'
+          )
+        } finally {
+          closePaymentModal()
+        }
+      },
+
+      onClose: () => {
+        toast.error(
+          'Payment cancelled'
+        )
+      },
+    })
+  } catch (error) {
+    console.error(error)
+
+    toast.error(
+      'Unable to initialize payment'
+    )
   }
+}
 
   return (
     <div className="min-h-screen flex flex-col bg-background">

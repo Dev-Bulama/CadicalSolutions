@@ -4,6 +4,7 @@ import { Manrope, Fraunces } from "next/font/google";
 import { Footer } from "@/components/footer";
 import WhatsAppButton from "@/components/whatsapp-button";
 import { Toaster } from "@/components/ui/sonner";
+import { CartProvider } from "@/context/cart-context";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
 const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-serif" });
@@ -18,11 +19,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${manrope.variable} ${fraunces.variable}`}>
       <body className="bg-[#FBFAF7] text-[#1A1A18] font-sans">
+                <CartProvider>
+
         <Navbar />
         {children}
         <Toaster />
         <WhatsAppButton />
         <Footer />
+        </CartProvider>
       </body>
     </html>
   );

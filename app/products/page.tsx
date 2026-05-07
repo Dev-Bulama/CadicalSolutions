@@ -15,6 +15,8 @@ import {
   Filter,
   X,
 } from 'lucide-react'
+import { useCart } from '@/context/cart-context'
+import { toast } from 'sonner'
 
 // ======================================================
 // TYPES
@@ -57,6 +59,7 @@ const categories = [
 
 function ProductsContent() {
   const searchParams = useSearchParams()
+  const { addToCart } = useCart()
 
   // ======================================================
   // URL FILTER
@@ -452,11 +455,19 @@ function ProductsContent() {
                       >
                         <ProductCard
                           {...product}
-                          onAddToCart={() =>
-                            console.log(
-                              'Added to cart'
+                          onAddToCart={() => {
+                            addToCart({
+                              id: product.id,
+                              name: product.name,
+                              price: product.price,
+                              category: product.category,
+                              image: product.image,
+                            })
+
+                            toast.success(
+                              `${product.name} added to cart`
                             )
-                          }
+                          }}
                         />
                       </div>
                     )
