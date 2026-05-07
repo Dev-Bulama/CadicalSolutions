@@ -66,11 +66,11 @@ export default function Portals() {
                   ))}
                 </ul>
               
-                <Link href={c.link} className="p-6 flex-1">
-              <div className="bg-[#f8fafc] border-t border-[#e4eaf2] px-6 py-4 text-[#1565C0] font-semibold flex justify-between">
+                {/* <Link href={c.link} className="p-6 flex-1"> */}
+              <Link href={c.link} className="bg-[#f8fafc] border-t border-[#e4eaf2] px-6 py-4 text-[#1565C0] font-semibold flex justify-between">
                 Explore <span>→</span>
-              </div>
               </Link>
+              {/* </Link> */}
             </motion.div>
           ))}
         </div>

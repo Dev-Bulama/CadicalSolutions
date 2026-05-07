@@ -61,7 +61,7 @@ export default function Hero() {
         {/* RIGHT IMAGE */}
         <div className="relative w-full h-[420px] md:h-[520px]">
           <Image
-            src="/images/mri.jpeg"
+            src="/mri.jpeg"
             alt="Healthcare"
             fill
             className="object-cover rounded-2xl"

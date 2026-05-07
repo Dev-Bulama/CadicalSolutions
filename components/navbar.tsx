@@ -23,14 +23,14 @@ export function Navbar() {
         />
         </Link>
 
-        <div className="leading-tight">
+        <Link href="/" className="leading-tight">
           <div className="text-[#1565C0] text-sm font-semibold">
             Cadical Solutions
           </div>
           <div className="text-[10px] text-[#6b7c93] font-light">
             Health is Wealth
           </div>
-        </div>
+        </Link>
       </div>
 
       {/* DESKTOP LINKS */}
