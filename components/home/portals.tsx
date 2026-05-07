@@ -22,7 +22,8 @@ export default function Portals() {
                 "OTC & prescription medications",
                 "Fast delivery across Nigeria",
                 "Secure payment — card, transfer & USSD"
-              ]
+              ],
+              link: "/products"
             },
             {
               title:"Supply Portal",
@@ -33,7 +34,8 @@ export default function Portals() {
                 "Auto-generated invoices & delivery notes",
                 "Monthly supply agreements available",
                 "Dedicated account manager"
-              ]
+              ],
+              link: "/institutional-portal"
             },
             {
               title:"Services",
@@ -44,13 +46,14 @@ export default function Portals() {
                 "Quarterly maintenance contracts",
                 "Supply chain consultations",
                 "24hr response to service requests"
-              ]
+              ],
+              link: "/booking"
             }
           ].map((c,i)=>(
             <motion.div key={i} whileHover={{y:-6}}
               className="bg-white border border-[#e4eaf2] rounded-xl overflow-hidden flex flex-col hover:shadow-xl">
 
-              <Link href={'/booking'} className="p-6 flex-1">
+              
                 <div className="text-3xl mb-4">{c.icon}</div>
                 <div className="text-xs uppercase text-[#6b7c93] mb-2">{c.sub}</div>
                 <h3 className="font-serif font-bold mb-2">{c.title}</h3>
@@ -62,11 +65,12 @@ export default function Portals() {
                     </li>
                   ))}
                 </ul>
-              </Link>
-
+              
+                <Link href={c.link} className="p-6 flex-1">
               <div className="bg-[#f8fafc] border-t border-[#e4eaf2] px-6 py-4 text-[#1565C0] font-semibold flex justify-between">
                 Explore <span>→</span>
               </div>
+              </Link>
             </motion.div>
           ))}
         </div>

@@ -149,7 +149,7 @@ function ProductsContent() {
               {/* Price Filter */}
               <div>
                 <label className="text-sm font-semibold text-foreground mb-3 block">
-                  Price Range: ${priceRange[0]} - ${priceRange[1]}
+                  Price Range: N{priceRange[0]} - N{priceRange[1]}
                 </label>
                 <input
                   type="range"
