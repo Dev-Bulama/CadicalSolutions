@@ -78,7 +78,7 @@ export default function AdminPage() {
       </div>
 
       {/* STATS */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {["pending", "confirmed", "completed", "cancelled"].map((s) => (
           <Card key={s}>
             <CardContent className="p-4">
@@ -89,7 +89,7 @@ export default function AdminPage() {
             </CardContent>
           </Card>
         ))}
-      </div>
+      </div> */}
 
       {/* TABLE */}
       <Card>

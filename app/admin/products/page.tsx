@@ -324,11 +324,11 @@ export default function EcommerceDashboard() {
         </p>
       </div>
 
-      <Tabs defaultValue="orders" className="space-y-6">
+      <Tabs defaultValue="admin" className="space-y-6">
         <TabsList>
-          <TabsTrigger value="orders">
+          {/* <TabsTrigger value="orders">
             Orders
-          </TabsTrigger>
+          </TabsTrigger> */}
 
           {/* <TabsTrigger value="profile">
             Profile
