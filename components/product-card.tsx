@@ -112,7 +112,7 @@ export function ProductCard({
         {/* Price */}
         <div className="mb-4">
           <p className="text-2xl font-bold text-primary">
-            ${price.toFixed(2)}
+            N{price.toFixed(2)}
           </p>
         </div>
 

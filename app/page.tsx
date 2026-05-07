@@ -68,7 +68,11 @@ export default function Home() {
       <Services />
 
       {/* Products */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+      <div className="bg-neutral-100">
+        <h2 className="text-3xl text-blue-600 p-4 px-8">Featured Products</h2>
+      
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 p-4 px-8 ">
+        
         {products.map((product) => (
           <ProductCard
             key={product.id}
@@ -93,6 +97,7 @@ export default function Home() {
   }}
           />
         ))}
+      </div>
       </div>
 
       {/* PROCESS */}
