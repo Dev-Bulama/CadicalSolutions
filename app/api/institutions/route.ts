@@ -9,11 +9,18 @@ export async function POST(req: NextRequest) {
 
   try {
     const institution = await prisma.institution.create({
-      data: {
-        ...body,
-        passwordHash: await bcrypt.hash(body.password, 10),
-      },
-    });
+  data: {
+    ...body,
+    passwordHash: await bcrypt.hash(body.password, 10),
+
+    documents: {
+      create: body.documents || [],
+    },
+  },
+  include: {
+    documents: true,
+  },
+});
 
     return Response.json(institution, { status: 201 });
   } catch (err) {

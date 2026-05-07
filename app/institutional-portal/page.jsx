@@ -198,6 +198,89 @@ function OnboardForm({ onDone }) {
     setFade(false);
     setTimeout(() => { setStep(n); setFade(true); }, 220);
   };
+  const uploadFile = async (file) => {
+  if (!file) return null;
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const res = await fetch("/api/upload", {
+    method: "POST",
+    body: formData,
+  });
+
+  const data = await res.json();
+  return data.url;
+};
+
+const handleSubmit = async () => {
+  try {
+    // 1. Upload files first
+    const [cacUrl, nafdacUrl, otherUrl] = await Promise.all([
+      uploadFile(form.cacDoc),
+      uploadFile(form.nafdacDoc),
+      uploadFile(form.otherDoc),
+    ]);
+
+    // 2. Build payload
+    const payload = {
+      instName: form.instName,
+      instType: form.instType,
+      cac: form.cac,
+      yearEstablished: Number(form.year),
+      staffCount: Number(form.staff),
+      bedCapacity: Number(form.beds),
+
+      state: form.state,
+      lga: form.lga,
+      address: form.address,
+
+      contactName: form.contactName,
+      designation: form.designation,
+      phone: form.phone,
+      altPhone: form.altPhone,
+      email: form.email,
+
+      services: form.services,
+      specialistOpts: form.specialistOpts,
+      consultOpts: form.consultOpts,
+      reagentOpts: form.reagentOpts,
+      eduOpts: form.eduOpts,
+
+      volume: form.volume,
+      notes: form.notes,
+
+      nafdac: form.nafdac,
+      pcn: form.pcn,
+      confirmDocs: form.confirmDocs,
+
+      accountEmail: form.accountEmail,
+      password: form.password,
+
+      documents: [
+        cacUrl && { name: "CAC Certificate", type: "CAC", url: cacUrl },
+        nafdacUrl && { name: "NAFDAC Licence", type: "NAFDAC", url: nafdacUrl },
+        otherUrl && { name: "Other Document", type: "OTHER", url: otherUrl },
+      ].filter(Boolean),
+    };
+
+    // 3. Send to API
+    const res = await fetch("/api/institutions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(data.error);
+
+    onDone(data);
+  } catch (err) {
+    console.error(err);
+    alert("Submission failed");
+  }
+};
 
   const stepContent = [
     // ── Step 0: Institution Profile
