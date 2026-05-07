@@ -38,20 +38,20 @@ interface Product {
 
 const MAX_PRICE = 5000000
 
-const categories = [
-  {
-    label: 'All Categories',
-    value: null,
-  },
-  {
-    label: 'MediStore',
-    value: 'medistore',
-  },
-  {
-    label: 'Institutional',
-    value: 'institutional',
-  },
-]
+// const categories = [
+//   {
+//     label: 'All Categories',
+//     value: null,
+//   },
+//   {
+//     label: 'MediStore',
+//     value: 'medistore',
+//   },
+//   {
+//     label: 'Institutional',
+//     value: 'institutional',
+//   },
+// ]
 
 // ======================================================
 // PAGE CONTENT
@@ -293,7 +293,7 @@ function ProductsContent() {
 
               {/* CATEGORY */}
 
-              <div className="space-y-3">
+              {/* <div className="space-y-3">
                 <label className="text-sm font-medium">
                   Category
                 </label>
@@ -320,7 +320,7 @@ function ProductsContent() {
                     </button>
                   ))}
                 </div>
-              </div>
+              </div> */}
 
               {/* PRICE */}
 

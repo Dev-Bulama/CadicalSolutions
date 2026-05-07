@@ -40,7 +40,7 @@ export function Navbar() {
         <a href="#why" className="hover:text-[#1565C0]">Why Cadical</a>
         <a href="#contact" className="hover:text-[#1565C0]">Contact</a>
         <a href="#compliance" className="hover:text-[#1565C0]">Compliance</a>
-        <Link href="/products?type=institutional" className="hover:text-[#1565C0]">
+        <Link href="/products?category=institutional" className="hover:text-[#1565C0]">
         <Button variant="outline" className="border border-[#1565C0] text-[#1565C0] px-4 py-2 rounded-full text-sm font-semibold hover:bg-[#1565C0] hover:text-white transition">
           Institutional Portal
         </Button>
