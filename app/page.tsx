@@ -74,6 +74,7 @@ export default function Home() {
             price={product.price}
             category={product.category}
             stock={product.stock}
+            image={product.image}
             onAddToCart={function (productId: string): void {
               throw new Error("Function not implemented.");
             }}

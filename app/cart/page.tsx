@@ -14,7 +14,8 @@ interface CartItem {
   name: string
   price: number
   quantity: number
-  category: 'EQUIPMENT' | 'CONSUMABLES' | 'PHARMACEUTICALS'
+  category: string
+  // category: 'EQUIPMENT' | 'CONSUMABLES' | 'PHARMACEUTICALS'
 }
 
 export default function CartPage() {

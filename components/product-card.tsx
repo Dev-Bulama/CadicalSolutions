@@ -10,8 +10,9 @@ interface ProductCardProps {
   id: string
   name: string
   price: number
-  image?: string
-  category: 'EQUIPMENT' | 'CONSUMABLES' | 'PHARMACEUTICALS'
+  image?: string | null
+  // category: 'EQUIPMENT' | 'CONSUMABLES' | 'PHARMACEUTICALS'
+  category: string
   stock: number
   onAddToCart: (productId: string) => void
 }
@@ -97,8 +98,9 @@ export function ProductCard({
       <div className="flex flex-col flex-1 p-4">
         {/* Category Badge */}
         <div className="mb-2">
-          <span className={`inline-block text-xs font-semibold px-2 py-1 rounded-full ${categoryColors[category]}`}>
-            {categoryLabels[category]}
+          <span className={`inline-block text-xs font-semibold px-2 py-1 rounded-full `}>
+            {/* {categoryLabels[category]} */}
+            {category}
           </span>
         </div>
 

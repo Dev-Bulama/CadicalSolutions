@@ -139,6 +139,7 @@ export default function RegisterPage() {
       // }
 
       setSuccess("Registration successful! Redirecting to your profile...")
+      router.push("/dashboard")
       // setTimeout(() => {
       //   router.push("/clinician/profile")
       // }, 2000)
@@ -167,7 +168,7 @@ export default function RegisterPage() {
               />
           </div>
           <h1 className="text-3xl font-bold">Join Cadical Solutions</h1>
-          <p className="text-muted-foreground">Register as a healthcare professional</p>
+          <p className="text-muted-foreground">Register here</p>
         </div>
 
         {/* Form Card */}
@@ -175,7 +176,7 @@ export default function RegisterPage() {
           <CardHeader>
             <CardTitle>Create Your Account</CardTitle>
             <CardDescription>
-              Step {step} of 2 - {step === 1 ? "Account Information" : "Professional Profile"}
+              {/* Step {step} of 2 - {step === 1 ? "Account Information" : "Professional Profile"} */}
             </CardDescription>
           </CardHeader>
           <CardContent>

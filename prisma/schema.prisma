@@ -120,7 +120,7 @@ model Product {
   id          String   @id @default(cuid())
   name        String
   description String
-  category    ProductCategory
+  category    String
   price       Float
   stock       Int
   sku         String   @unique

@@ -1,15 +1,20 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
 import { Button } from "@/components/ui/button";
+
 import { Input } from "@/components/ui/input";
+
 import { Textarea } from "@/components/ui/textarea";
+
 import {
   Table,
   TableBody,
@@ -18,26 +23,44 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
-// ===============================
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+// ======================================================
 // TYPES
-// ===============================
+// ======================================================
 
 type Product = {
   id: string;
   name: string;
-  description?: string;
+  description?: string | null;
   price: number;
   stock: number;
   sku: string;
-  imageUrl?: string;
+  image?: string | null;
+  category: string;
 };
 
 type Order = {
@@ -47,262 +70,511 @@ type Order = {
   createdAt: string;
 };
 
-// ===============================
-// DASHBOARD
-// ===============================
+type ProductForm = {
+  name: string;
+  description: string;
+  price: string;
+  stock: string;
+  sku: string;
+  image: string;
+  category: string;
+};
+
+// ======================================================
+// DEFAULT FORM
+// ======================================================
+
+const defaultForm: ProductForm = {
+  name: "",
+  description: "",
+  price: "",
+  stock: "",
+  sku: "",
+  image: "",
+  category: "",
+};
+
+// ======================================================
+// COMPONENT
+// ======================================================
 
 export default function EcommerceDashboard() {
+  // ======================================================
+  // STATE
+  // ======================================================
+
   const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
 
   const [open, setOpen] = useState(false);
-  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+
+  const [editingProduct, setEditingProduct] =
+    useState<Product | null>(null);
 
   const [uploading, setUploading] = useState(false);
 
-  const [form, setForm] = useState({
-    name: "",
-    description: "",
-    price: "",
-    stock: "",
-    sku: "",
-    imageUrl: "",
-  });
+  const [loading, setLoading] = useState(false);
 
-  // ===============================
-  // FETCH DATA
-  // ===============================
+  const [form, setForm] =
+    useState<ProductForm>(defaultForm);
+
+  // ======================================================
+  // FETCH PRODUCTS
+  // ======================================================
 
   async function loadProducts() {
-    const res = await fetch("/api/products");
-    const data = await res.json();
-    setProducts(data);
+    try {
+      const res = await fetch("/api/products");
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch products");
+      }
+
+      const data = await res.json();
+
+      setProducts(data);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
+  // ======================================================
+  // FETCH ORDERS
+  // ======================================================
+
   async function loadOrders() {
-    const res = await fetch("/api/orders");
-    const data = await res.json();
-    setOrders(data);
+    try {
+      const res = await fetch("/api/orders");
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch orders");
+      }
+
+      const data = await res.json();
+
+      setOrders(data);
+    } catch (error) {
+      console.error(error);
+    }
   }
+
+  // ======================================================
+  // INITIAL LOAD
+  // ======================================================
 
   useEffect(() => {
     loadProducts();
     loadOrders();
   }, []);
 
-  // ===============================
-  // IMAGE UPLOAD (YOUR API)
-  // ===============================
+  // ======================================================
+  // IMAGE UPLOAD
+  // ======================================================
 
   async function uploadImage(file: File) {
-    setUploading(true);
+    try {
+      setUploading(true);
 
-    const formData = new FormData();
-    formData.append("file", file);
+      const formData = new FormData();
 
-    const res = await fetch("/api/upload", {
-      method: "POST",
-      body: formData,
-    });
+      formData.append("file", file);
 
-    if (!res.ok) {
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) {
+        throw new Error("Image upload failed");
+      }
+
+      const data = await res.json();
+
+      return data.url as string;
+    } catch (error) {
+      console.error(error);
+      alert("Upload failed");
+      return "";
+    } finally {
       setUploading(false);
-      throw new Error("Upload failed");
     }
-
-    const data = await res.json();
-    setUploading(false);
-
-    return data.url as string;
   }
 
-  // ===============================
-  // PRODUCT CRUD
-  // ===============================
+  // ======================================================
+  // OPEN CREATE
+  // ======================================================
 
   function openCreate() {
     setEditingProduct(null);
-    setForm({
-      name: "",
-      description: "",
-      price: "",
-      stock: "",
-      sku: "",
-      imageUrl: "",
-    });
+    setForm(defaultForm);
     setOpen(true);
   }
 
+  // ======================================================
+  // OPEN EDIT
+  // ======================================================
+
   function openEdit(product: Product) {
     setEditingProduct(product);
+
     setForm({
       name: product.name,
       description: product.description || "",
       price: String(product.price),
       stock: String(product.stock),
       sku: product.sku,
-      imageUrl: product.imageUrl || "",
+      image: product.image || "",
+      category: product.category || "",
     });
+
     setOpen(true);
   }
 
+  // ======================================================
+  // SAVE PRODUCT
+  // ======================================================
+
   async function saveProduct() {
-    const payload = {
-      ...form,
-      price: Number(form.price),
-      stock: Number(form.stock),
-    };
+    try {
+      setLoading(true);
 
-    if (editingProduct) {
-      await fetch(`/api/products/${editingProduct.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
+      const payload = {
+        name: form.name,
+        description: form.description,
+        price: Number(form.price),
+        stock: Number(form.stock),
+        sku: form.sku,
+        image: form.image,
+        category: form.category,
+      };
+
+      const endpoint = editingProduct
+        ? `/api/products/${editingProduct.id}`
+        : "/api/products";
+
+      const method = editingProduct ? "PUT" : "POST";
+
+      const res = await fetch(endpoint, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(payload),
       });
-    } else {
-      await fetch("/api/products", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+
+      if (!res.ok) {
+        throw new Error("Failed to save product");
+      }
+
+      await loadProducts();
+
+      setOpen(false);
+
+      setForm(defaultForm);
+
+      setEditingProduct(null);
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong");
+    } finally {
+      setLoading(false);
     }
-
-    setOpen(false);
-    loadProducts();
   }
+
+  // ======================================================
+  // DELETE PRODUCT
+  // ======================================================
 
   async function deleteProduct(id: string) {
-    await fetch(`/api/products/${id}`, { method: "DELETE" });
-    loadProducts();
+    const confirmed = confirm(
+      "Are you sure you want to delete this product?"
+    );
+
+    if (!confirmed) return;
+
+    try {
+      const res = await fetch(`/api/products/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error("Delete failed");
+      }
+
+      await loadProducts();
+    } catch (error) {
+      console.error(error);
+      alert("Failed to delete product");
+    }
   }
 
-  // ===============================
-  // UI
-  // ===============================
+  // ======================================================
+  // RENDER
+  // ======================================================
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold">Ecommerce Dashboard</h1>
+      <div>
+        <h1 className="text-3xl font-bold">
+          Ecommerce Dashboard
+        </h1>
 
-      <Tabs defaultValue="orders">
+        <p className="text-muted-foreground">
+          Manage products, orders, and customer data
+        </p>
+      </div>
+
+      <Tabs defaultValue="orders" className="space-y-6">
         <TabsList>
-          <TabsTrigger value="orders">Orders</TabsTrigger>
-          <TabsTrigger value="profile">Profile</TabsTrigger>
-          <TabsTrigger value="address">Address</TabsTrigger>
-          <TabsTrigger value="admin">Admin Products</TabsTrigger>
+          <TabsTrigger value="orders">
+            Orders
+          </TabsTrigger>
+
+          {/* <TabsTrigger value="profile">
+            Profile
+          </TabsTrigger>
+
+          <TabsTrigger value="address">
+            Address
+          </TabsTrigger> */}
+
+          <TabsTrigger value="admin">
+            Products
+          </TabsTrigger>
         </TabsList>
 
+        {/* ====================================================== */}
         {/* ORDERS */}
+        {/* ====================================================== */}
+
         <TabsContent value="orders">
           <Card>
             <CardHeader>
-              <CardTitle>Purchase History</CardTitle>
+              <CardTitle>
+                Purchase History
+              </CardTitle>
             </CardHeader>
+
             <CardContent>
               <Table>
                 <TableHeader>
                   <TableRow>
                     <TableHead>ID</TableHead>
+
                     <TableHead>Date</TableHead>
+
                     <TableHead>Status</TableHead>
+
                     <TableHead>Total</TableHead>
                   </TableRow>
                 </TableHeader>
+
                 <TableBody>
-                  {orders.map((o) => (
-                    <TableRow key={o.id}>
-                      <TableCell>{o.id}</TableCell>
-                      <TableCell>{o.createdAt}</TableCell>
-                      <TableCell>{o.status}</TableCell>
-                      <TableCell>${o.totalAmount}</TableCell>
+                  {orders.map((order) => (
+                    <TableRow key={order.id}>
+                      <TableCell>
+                        {order.id}
+                      </TableCell>
+
+                      <TableCell>
+                        {new Date(
+                          order.createdAt
+                        ).toLocaleDateString()}
+                      </TableCell>
+
+                      <TableCell>
+                        {order.status}
+                      </TableCell>
+
+                      <TableCell>
+                        ${order.totalAmount}
+                      </TableCell>
                     </TableRow>
                   ))}
+
+                  {orders.length === 0 && (
+                    <TableRow>
+                      <TableCell
+                        colSpan={4}
+                        className="text-center"
+                      >
+                        No orders found
+                      </TableCell>
+                    </TableRow>
+                  )}
                 </TableBody>
               </Table>
             </CardContent>
           </Card>
         </TabsContent>
 
+        {/* ====================================================== */}
         {/* PROFILE */}
+        {/* ====================================================== */}
+
         <TabsContent value="profile">
           <Card>
             <CardHeader>
-              <CardTitle>Profile</CardTitle>
+              <CardTitle>
+                Profile
+              </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
+
+            <CardContent className="space-y-4">
               <Input placeholder="Full name" />
-              <Input placeholder="Email" />
-              <Button>Update Profile</Button>
+
+              <Input placeholder="Email address" />
+
+              <Button>
+                Update Profile
+              </Button>
             </CardContent>
           </Card>
         </TabsContent>
 
+        {/* ====================================================== */}
         {/* ADDRESS */}
+        {/* ====================================================== */}
+
         <TabsContent value="address">
           <Card>
             <CardHeader>
-              <CardTitle>Address</CardTitle>
+              <CardTitle>
+                Shipping Address
+              </CardTitle>
             </CardHeader>
-            <CardContent>
-              <Textarea placeholder="Shipping address" />
-              <Button>Save Address</Button>
+
+            <CardContent className="space-y-4">
+              <Textarea placeholder="Enter your shipping address" />
+
+              <Button>
+                Save Address
+              </Button>
             </CardContent>
           </Card>
         </TabsContent>
 
+        {/* ====================================================== */}
         {/* PRODUCTS */}
+        {/* ====================================================== */}
+
         <TabsContent value="admin">
           <Card>
-            <CardHeader className="flex flex-row justify-between items-center">
-              <CardTitle>Products</CardTitle>
-              <Button onClick={openCreate}>Add Product</Button>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle>
+                Products
+              </CardTitle>
+
+              <Button onClick={openCreate}>
+                Add Product
+              </Button>
             </CardHeader>
 
             <CardContent>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Image</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>SKU</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead>Stock</TableHead>
-                    <TableHead>Actions</TableHead>
+                    <TableHead>
+                      Image
+                    </TableHead>
+
+                    <TableHead>
+                      Name
+                    </TableHead>
+
+                    <TableHead>
+                      SKU
+                    </TableHead>
+
+                    <TableHead>
+                      Price
+                    </TableHead>
+
+                    <TableHead>
+                      Stock
+                    </TableHead>
+
+                    <TableHead>
+                      Category
+                    </TableHead>
+
+                    <TableHead>
+                      Actions
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
 
                 <TableBody>
-                  {products.map((p) => (
-                    <TableRow key={p.id}>
+                  {products.map((product) => (
+                    <TableRow key={product.id}>
                       <TableCell>
-                        {p.imageUrl ? (
+                        {product.image ? (
                           <img
-                            src={p.imageUrl}
-                            className="w-10 h-10 object-cover rounded"
+                            src={product.image}
+                            alt={product.name}
+                            className="w-12 h-12 rounded object-cover border"
                           />
                         ) : (
-                          "-"
+                          <div className="w-12 h-12 rounded bg-muted flex items-center justify-center text-xs">
+                            N/A
+                          </div>
                         )}
                       </TableCell>
 
-                      <TableCell>{p.name}</TableCell>
-                      <TableCell>{p.sku}</TableCell>
-                      <TableCell>${p.price}</TableCell>
-                      <TableCell>{p.stock}</TableCell>
+                      <TableCell className="font-medium">
+                        {product.name}
+                      </TableCell>
+
+                      <TableCell>
+                        {product.sku}
+                      </TableCell>
+
+                      <TableCell>
+                        ${product.price}
+                      </TableCell>
+
+                      <TableCell>
+                        {product.stock}
+                      </TableCell>
+
+                      <TableCell className="capitalize">
+                        {product.category}
+                      </TableCell>
 
                       <TableCell className="space-x-2">
-                        <Button variant="outline" onClick={() => openEdit(p)}>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() =>
+                            openEdit(product)
+                          }
+                        >
                           Edit
                         </Button>
+
                         <Button
                           variant="destructive"
-                          onClick={() => deleteProduct(p.id)}
+                          size="sm"
+                          onClick={() =>
+                            deleteProduct(product.id)
+                          }
                         >
                           Delete
                         </Button>
                       </TableCell>
                     </TableRow>
                   ))}
+
+                  {products.length === 0 && (
+                    <TableRow>
+                      <TableCell
+                        colSpan={7}
+                        className="text-center"
+                      >
+                        No products found
+                      </TableCell>
+                    </TableRow>
+                  )}
                 </TableBody>
               </Table>
             </CardContent>
@@ -310,69 +582,141 @@ export default function EcommerceDashboard() {
         </TabsContent>
       </Tabs>
 
+      {/* ====================================================== */}
       {/* PRODUCT MODAL */}
+      {/* ====================================================== */}
+
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent>
+        <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle>
-              {editingProduct ? "Edit Product" : "Create Product"}
+              {editingProduct
+                ? "Edit Product"
+                : "Create Product"}
             </DialogTitle>
           </DialogHeader>
 
-          <div className="space-y-3">
+          <div className="space-y-4">
+            {/* NAME */}
+
             <Input
-              placeholder="Name"
+              placeholder="Product name"
               value={form.name}
               onChange={(e) =>
-                setForm({ ...form, name: e.target.value })
+                setForm({
+                  ...form,
+                  name: e.target.value,
+                })
               }
             />
 
+            {/* DESCRIPTION */}
+
             <Textarea
-              placeholder="Description"
+              placeholder="Product description"
               value={form.description}
               onChange={(e) =>
-                setForm({ ...form, description: e.target.value })
+                setForm({
+                  ...form,
+                  description: e.target.value,
+                })
               }
             />
+
+            {/* SKU */}
 
             <Input
               placeholder="SKU"
               value={form.sku}
               onChange={(e) =>
-                setForm({ ...form, sku: e.target.value })
+                setForm({
+                  ...form,
+                  sku: e.target.value,
+                })
               }
             />
+
+            {/* PRICE */}
 
             <Input
               type="number"
               placeholder="Price"
               value={form.price}
               onChange={(e) =>
-                setForm({ ...form, price: e.target.value })
+                setForm({
+                  ...form,
+                  price: e.target.value,
+                })
               }
             />
+
+            {/* STOCK */}
 
             <Input
               type="number"
               placeholder="Stock"
               value={form.stock}
               onChange={(e) =>
-                setForm({ ...form, stock: e.target.value })
+                setForm({
+                  ...form,
+                  stock: e.target.value,
+                })
               }
             />
 
-            {/* IMAGE UPLOAD */}
-            <div className="space-y-2">
+            {/* CATEGORY */}
+
+            <Select
+              value={form.category}
+              onValueChange={(value) =>
+                setForm({
+                  ...form,
+                  category: value,
+                })
+              }
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select category" />
+              </SelectTrigger>
+
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>
+                    Categories
+                  </SelectLabel>
+
+                  <SelectItem value="medistore">
+                    MediStore
+                  </SelectItem>
+
+                  <SelectItem value="institutional">
+                    Institutional
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+
+            {/* IMAGE */}
+
+            <div className="space-y-3">
               <Input
                 type="file"
                 accept="image/*"
                 onChange={async (e) => {
-                  const file = e.target.files?.[0];
+                  const file =
+                    e.target.files?.[0];
+
                   if (!file) return;
 
-                  const url = await uploadImage(file);
-                  setForm((prev) => ({ ...prev, imageUrl: url }));
+                  const url =
+                    await uploadImage(file);
+
+                  if (!url) return;
+
+                  setForm((prev) => ({
+                    ...prev,
+                    image: url,
+                  }));
                 }}
               />
 
@@ -382,16 +726,27 @@ export default function EcommerceDashboard() {
                 </p>
               )}
 
-              {form.imageUrl && (
+              {form.image && (
                 <img
-                  src={form.imageUrl}
-                  className="w-full h-40 object-cover rounded"
+                  src={form.image}
+                  alt="Preview"
+                  className="w-full h-48 rounded object-cover border"
                 />
               )}
             </div>
 
-            <Button className="w-full" onClick={saveProduct}>
-              Save
+            {/* SAVE */}
+
+            <Button
+              className="w-full"
+              disabled={loading}
+              onClick={saveProduct}
+            >
+              {loading
+                ? "Saving..."
+                : editingProduct
+                ? "Update Product"
+                : "Create Product"}
             </Button>
           </div>
         </DialogContent>
