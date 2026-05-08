@@ -126,31 +126,31 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-semibold">Phone</h3>
                   <p className="text-muted-foreground text-sm">
-                    +234 000 000 0000
+                    +234 707 617 5550
                   </p>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="rounded-2xl shadow-lg">
+            {/* <Card className="rounded-2xl shadow-lg">
               <CardContent className="p-8 flex items-start gap-4">
                 <MapPin className="w-6 h-6 mt-1" />
                 <div>
                   <h3 className="font-semibold">Office Address</h3>
                   <p className="text-muted-foreground text-sm">
-                    123 Healthcare Avenue, Lagos, Nigeria
+                    123 Healthcare Avenue, Abuja, Nigeria
                   </p>
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
 
-            <Card className="rounded-2xl shadow-lg">
+            {/* <Card className="rounded-2xl shadow-lg">
               <CardContent className="p-8">
                 <div className="w-full h-48 bg-muted rounded-xl flex items-center justify-center text-sm text-muted-foreground">
                   Google Map Placeholder
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
           </div>
         </div>
       </section>

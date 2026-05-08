@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 
 export const metadata = {
-  title: "Refund & Service Policy | Cadical",
+  title: "Terms | Cadical",
   description: "Read Cadical's refund terms and service engagement policies.",
 }
 
@@ -10,7 +10,7 @@ export default function RefundServicePolicyPage() {
   return (
     <div className="min-h-screen py-24 px-6 bg-gradient-to-b from-background to-muted/40">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold mb-6">Refund & Service Policy</h1>
+        <h1 className="text-4xl font-bold mb-6">Terms</h1>
         <Card className="rounded-2xl shadow-lg">
           <CardContent className="p-10 space-y-10">
 
