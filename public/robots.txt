@@ -1,0 +1,39 @@
+# robots.txt
+
+User-agent: GPTBot
+Disallow: /
+Allow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+Allow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: YouBot
+Disallow: /
+
+User-agent: *
+Disallow: /private/
+Disallow: /admin/
+Disallow: /members/
+Disallow: /api/
+
+# Allow only the homepage
+Allow: /$
