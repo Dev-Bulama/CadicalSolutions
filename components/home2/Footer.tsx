@@ -36,9 +36,9 @@ export default function Footer() {
 
       </div>
 
-      <div className="mt-10 text-xs text-white/50">
+      {/* <div className="mt-10 text-xs text-white/50">
         © 2026 Cadical Solutions Ltd
-      </div>
+      </div> */}
     </footer>
   );
 }

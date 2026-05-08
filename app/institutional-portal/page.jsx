@@ -159,10 +159,10 @@ function Welcome({ onStart }) {
         </div>
       </div>
 
-      <footer style={w.footer}>
+      {/* <footer style={w.footer}>
         <span>© 2026 Cadical Solutions Ltd · Nigeria</span>
         <span>🔒 SSL Secured · 📋 NAFDAC Aligned · 🇳🇬 CAC Registered</span>
-      </footer>
+      </footer> */}
     </div>
   );
 }

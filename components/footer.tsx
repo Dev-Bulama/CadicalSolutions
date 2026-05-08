@@ -148,7 +148,7 @@ export function Footer() {
             </Link>
           </div>
 
-          <p>&copy; 2015 Cadical Solutions Limited. All rights reserved.</p>
+          <p>&copy; 2025 Cadical Solutions Limited. All rights reserved.</p>
         </div>
       </div>
     </footer>
