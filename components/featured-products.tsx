@@ -1,3 +1,4 @@
+"use client"
 import { toast } from "sonner"
 import { ProductCard } from "./product-card"
 import { useEffect, useState } from "react"
