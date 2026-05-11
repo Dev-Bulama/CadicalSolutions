@@ -270,6 +270,51 @@ model Document {
   createdAt     DateTime @default(now())
 }
 
+model Referral {
+  id                    String    @id @default(cuid())
+  refId                 String    @unique
+  
+  // Referrer Details
+  referrerFullName      String
+  referrerDesignation   String
+  referrerFacility      String
+  referrerFacilityType  String
+  referrerPhone         String
+  referrerEmail         String?
+  referrerState         String
+  referrerLGA           String?
+  referrerAddress       String?
+  
+  // Client Details
+  clientFacilityName    String
+  clientType            String
+  clientContactPerson   String?
+  clientPhone           String
+  clientEmail           String?
+  clientState           String
+  clientLGA             String?
+  clientAddress         String?
+  
+  // Supply Details
+  reasonForRequest      String
+  supplyCategory        String[]  @default([])
+  specificTests         String[]  @default([])
+  urgencyLevel          String
+  quantity              String?
+  deliveryMethod        String?
+  additionalNotes       String?
+  
+  // Additional Details
+  affiliateId           String?
+  referredVia           String?
+  paymentPreference     String?
+  estimatedValue        String?
+  consent               Boolean   @default(false)
+  
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+}
+
 
 enum ServiceCategory {
   CONSULTATIONS

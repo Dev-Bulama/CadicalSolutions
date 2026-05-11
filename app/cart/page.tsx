@@ -10,7 +10,7 @@ import {
   Trash2,
 } from 'lucide-react'
 
-import { Footer } from '@/components/footer'
+// import { Footer } from '@/components/footer'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
@@ -92,7 +92,7 @@ export default function CartPage() {
           </div>
         </div>
 
-        <Footer />
+        {/* <Footer /> */}
       </div>
     )
   }
@@ -263,7 +263,7 @@ export default function CartPage() {
         </div>
       </main>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }

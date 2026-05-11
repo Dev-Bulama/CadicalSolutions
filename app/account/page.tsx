@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 // import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { Button } from '@/components/ui/button'
@@ -10,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { User, Package, Heart, LogOut, Edit2, Save, X } from 'lucide-react'
 import { toast } from 'sonner'
 import { Navbar } from '@/components/navbar'
+import Link from 'next/link'
 
 interface Order {
   id: string
@@ -87,7 +87,7 @@ export default function AccountPage() {
             </div>
           </div>
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     )
   }
