@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 interface FormData {
   referrerFullName: string;
@@ -228,14 +229,14 @@ export default function ReferralsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-blue-50 to-slate-50 py-10 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-blue-500 via-blue-600 to-[#1565C0] py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         {/* TOP BANNER */}
         <motion.div
           initial={{ y: -30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="relative rounded-t-lg overflow-hidden bg-gradient-to-r from-[#1B3A5C] via-[#1B3A5C] to-[#0f2842] px-6 sm:px-8 py-8 sm:py-10 shadow-lg"
+          className="relative rounded-t-lg overflow-hidden bg-gradient-to-r from-[#1565C0] via-blue-600 to-blue-700 px-6 sm:px-8 py-8 sm:py-10 shadow-lg"
         >
           {/* Decorative circles */}
           <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-gradient-to-b from-yellow-300 to-transparent opacity-5 -translate-y-1/2 translate-x-1/2" />
@@ -246,9 +247,9 @@ export default function ReferralsPage() {
             <div className="flex items-center gap-4">
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="w-14 h-14 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg"
+                className="w-14 h-14 bg-gradient-to-br from-blue to-[#1565C0] rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg"
               >
-                CS
+                <Image src={'/images/logo'} height={20} width={20} alt='C' className='w-20 h-20' />
               </motion.div>
               <div>
                 <h1 className="font-cormorant text-2xl sm:text-3xl font-semibold text-white">Cadical Solutions Ltd</h1>
