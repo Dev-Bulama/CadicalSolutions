@@ -271,7 +271,7 @@ export default function ReferralsPage() {
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="bg-gradient-to-r from-[#162f4e] to-[#1B3A5C] px-6 sm:px-8 py-6 sm:py-8"
+          className="bg-gradient-to-r from-[#1565C0] to-[#1B3A5C] px-6 sm:px-8 py-6 sm:py-8"
         >
           <div className="relative flex justify-between">
             {/* Connection line */}
