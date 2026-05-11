@@ -46,6 +46,23 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
           </Link>
+
+           <Link href="/admin/referrals" className="group">
+            <Card className="h-full hover:shadow-xl transition-all duration-300 group-hover:border-green-500 cursor-pointer">
+              <CardHeader className="pb-3">
+                {/* <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-3 group-hover:bg-green-200 transition-colors">
+                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m0 0l8-4m0 0l8 4m0 0v10l-8 4m0 0l-8-4m0 0v-10l8-4m0 0l8 4" />
+                  </svg>
+                </div> */}
+                <CardTitle className="text-2xl text-slate-900">Referrals</CardTitle>
+                <CardDescription>View all referrals</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-500 group-hover:text-slate-600 transition-colors">View your referrals</p>
+              </CardContent>
+            </Card>
+          </Link>
         </div>
       </div>
     </div>

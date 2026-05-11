@@ -108,6 +108,12 @@ export function Footer() {
                   Contact
                 </Link>
               </li>
+
+              <li>
+                <Link href="/referrals" className="hover:text-primary">
+                  Referrals
+                </Link>
+              </li>
               
             </ul>
           </div>

@@ -1,6 +1,45 @@
 import  prisma  from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 
+export async function GET(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const refId = searchParams.get('refId');
+
+    // Get single referral
+    if (refId) {
+      const referral = await prisma.referral.findUnique({
+        where: { refId },
+      });
+
+      if (!referral) {
+        return NextResponse.json(
+          { error: 'Referral not found' },
+          { status: 404 }
+        );
+      }
+
+      return NextResponse.json(referral);
+    }
+
+    // Get all referrals
+    const referrals = await prisma.referral.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    return NextResponse.json(referrals);
+  } catch (error) {
+    console.error('Error fetching referrals:', error);
+
+    return NextResponse.json(
+      { error: 'Failed to fetch referrals' },
+      { status: 500 }
+    );
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -54,30 +93,30 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET(request: NextRequest) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const refId = searchParams.get('refId');
+// export async function GET(request: NextRequest) {
+//   try {
+//     const { searchParams } = new URL(request.url);
+//     const refId = searchParams.get('refId');
 
-    if (refId) {
-      const referral = await prisma.referral.findUnique({
-        where: { refId },
-      });
+//     if (refId) {
+//       const referral = await prisma.referral.findUnique({
+//         where: { refId },
+//       });
 
-      return NextResponse.json(referral);
-    }
+//       return NextResponse.json(referral);
+//     }
 
-    const referrals = await prisma.referral.findMany({
-      orderBy: { createdAt: 'desc' },
-    });
+//     const referrals = await prisma.referral.findMany({
+//       orderBy: { createdAt: 'desc' },
+//     });
 
-    return NextResponse.json(referrals);
-  } catch (error) {
-    console.error('Error fetching referrals:', error);
+//     return NextResponse.json(referrals);
+//   } catch (error) {
+//     console.error('Error fetching referrals:', error);
 
-    return NextResponse.json(
-      { error: 'Failed to fetch referrals' },
-      { status: 500 }
-    );
-  }
-}
+//     return NextResponse.json(
+//       { error: 'Failed to fetch referrals' },
+//       { status: 500 }
+//     );
+//   }
+// }
