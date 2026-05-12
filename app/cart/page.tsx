@@ -107,7 +107,7 @@ export default function CartPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* CART ITEMS */}
 
-          <section className="lg:col-span-2 space-y-4">
+          <section className="mt-8 lg:col-span-2 space-y-4">
             {cartItems.map((item) => (
               <div
                 key={item.id}
