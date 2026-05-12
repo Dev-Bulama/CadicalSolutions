@@ -1,4 +1,5 @@
 import { auth } from '@/lib/auth'
+import { generateTrackingCode } from '@/lib/generate-tracking-code'
 import prisma from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
@@ -84,6 +85,7 @@ export async function POST(req: Request) {
         userId: session.user.id,
 
         totalAmount: body.totalAmount,
+        trackingCode: generateTrackingCode(),
 
         paymentId: String(
           body.transaction_id
