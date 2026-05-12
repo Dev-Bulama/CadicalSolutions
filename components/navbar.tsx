@@ -94,9 +94,11 @@ export function Navbar() {
           {/* </div> */}
 
           <div className="flex flex-col gap-3 px-6 pb-5">
+             <Link href="/products?category=institutional" className="hover:text-[#1565C0]">
             <button className="border border-[#1565C0] text-[#1565C0] px-4 py-2 rounded text-sm font-semibold">
               Institutional Portal
             </button>
+            </Link>
 
             <Link
               href="/products"

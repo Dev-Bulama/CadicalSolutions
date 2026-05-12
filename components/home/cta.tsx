@@ -5,7 +5,7 @@ export default function CTA() {
     <section id="contact" className="bg-[#0d47a1] text-white py-20 px-5 text-center">
       <div className="max-w-3xl mx-auto">
         <h2 className="font-serif text-4xl mb-4">
-          Ready to work <span className="italic text-teal-soft">with Cadical?</span>
+          Ready to work <span className="italic text-teal-soft">with us?</span>
         </h2>
 
         <p className="mb-6 text-white/70">
