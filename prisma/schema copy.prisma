@@ -157,11 +157,9 @@ model Order {
   shippingAddress String?
   notes          String?
 
-  trackingCode     String       @unique
-  trackingNumber   String?
-  carrier          String?
-
-
+  trackingNumber  String?
+  carrier         String?
+  estimatedDelivery DateTime?
 
   trackingEvents  TrackingEvent[]
   
@@ -184,7 +182,6 @@ model OrderItem {
 
 model TrackingEvent {
   id          String   @id @default(cuid())
-
   orderId     String
   order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
@@ -195,6 +192,15 @@ model TrackingEvent {
   createdAt   DateTime @default(now())
 }
 
+model CourierLocation {
+  id          String   @id @default(cuid())
+  orderId     String   @unique
+
+  latitude    Float
+  longitude   Float
+
+  updatedAt   DateTime @updatedAt
+}
 
 model Booking {
   id            String   @id @default(cuid())
