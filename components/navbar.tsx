@@ -80,7 +80,7 @@ export function Navbar() {
 
       {/* MOBILE MENU */}
       {open && (
-        <div className="absolute top-[68px] left-0 right-0 bg-white border-b border-[#e4eaf2] shadow-lg md:hidden">
+        <div className="z-20 absolute top-[68px] left-0 right-0 bg-white border-b border-[#e4eaf2] shadow-lg md:hidden">
            {isHomePage && (
           
           <div className="flex flex-col px-6 py-4 gap-4 text-sm text-[#6b7c93]">
