@@ -24,127 +24,140 @@ const USERS = [
   { email: "freeuser@cadical.com",   name: "Free User",      role: "user"       },
 ]
 
-// ─── PRODUCTS ─────────────────────────────────────────────────────────────────
+// ─── PRODUCTS (100 across 9 categories) ──────────────────────────────────────
+// Product model fields: id, name, description, category, price, stock, sku, image, specs
 
 const PRODUCTS = [
   // IMAGING (12)
-  { name: "GE Voluson E10 Ultrasound", category: "Imaging", price: 45000000, description: "High-end 4D ultrasound system for OB/GYN", stock: 3, unit: "unit", brand: "GE Healthcare" },
-  { name: "Siemens Luminos dRF Fluoroscopy", category: "Imaging", price: 72000000, description: "Digital radiography and fluoroscopy system", stock: 2, unit: "unit", brand: "Siemens Healthineers" },
-  { name: "Philips Affiniti 70 Ultrasound", category: "Imaging", price: 38000000, description: "Shared-service ultrasound for cardiology and radiology", stock: 4, unit: "unit", brand: "Philips" },
-  { name: "Canon Aquilion 64-Slice CT Scanner", category: "Imaging", price: 180000000, description: "64-slice CT scanner for diagnostic imaging", stock: 1, unit: "unit", brand: "Canon Medical" },
-  { name: "Mindray DC-70 Pro Ultrasound", category: "Imaging", price: 22000000, description: "Premium diagnostic ultrasound with AI assistance", stock: 5, unit: "unit", brand: "Mindray" },
-  { name: "Samsung HM70A Ultrasound", category: "Imaging", price: 8500000, description: "Portable ultrasound for point-of-care use", stock: 8, unit: "unit", brand: "Samsung Medison" },
-  { name: "Agfa DR 100 X-Ray System", category: "Imaging", price: 15000000, description: "Direct digital radiography system", stock: 4, unit: "unit", brand: "Agfa" },
-  { name: "Carestream DRX-Evolution Plus", category: "Imaging", price: 28000000, description: "Ceiling-suspended digital radiography system", stock: 2, unit: "unit", brand: "Carestream" },
-  { name: "Fujifilm FDR D-EVO II Detector", category: "Imaging", price: 9800000, description: "Flat panel detector for DR systems", stock: 6, unit: "unit", brand: "Fujifilm" },
-  { name: "Esaote MyLab X8 Ultrasound", category: "Imaging", price: 18500000, description: "Ultrasound for musculoskeletal and vascular imaging", stock: 3, unit: "unit", brand: "Esaote" },
-  { name: "Mindray Z60 Portable Ultrasound", category: "Imaging", price: 6200000, description: "Portable color Doppler ultrasound", stock: 10, unit: "unit", brand: "Mindray" },
-  { name: "Shimadzu Flexavision Fluoroscopy", category: "Imaging", price: 55000000, description: "Large-format fluoroscopy with flat panel detector", stock: 1, unit: "unit", brand: "Shimadzu" },
+  { sku: "IMG-001", name: "GE Voluson E10 Ultrasound",           category: "Imaging",        price: 45000000, stock: 3,    description: "High-end 4D ultrasound system for OB/GYN" },
+  { sku: "IMG-002", name: "Siemens Luminos dRF Fluoroscopy",     category: "Imaging",        price: 72000000, stock: 2,    description: "Digital radiography and fluoroscopy system" },
+  { sku: "IMG-003", name: "Philips Affiniti 70 Ultrasound",      category: "Imaging",        price: 38000000, stock: 4,    description: "Shared-service ultrasound for cardiology and radiology" },
+  { sku: "IMG-004", name: "Canon Aquilion 64-Slice CT Scanner",  category: "Imaging",        price: 180000000, stock: 1,   description: "64-slice CT scanner for diagnostic imaging" },
+  { sku: "IMG-005", name: "Mindray DC-70 Pro Ultrasound",        category: "Imaging",        price: 22000000, stock: 5,    description: "Premium diagnostic ultrasound with AI assistance" },
+  { sku: "IMG-006", name: "Samsung HM70A Portable Ultrasound",   category: "Imaging",        price: 8500000,  stock: 8,    description: "Portable ultrasound for point-of-care use" },
+  { sku: "IMG-007", name: "Agfa DR 100 X-Ray System",            category: "Imaging",        price: 15000000, stock: 4,    description: "Direct digital radiography system" },
+  { sku: "IMG-008", name: "Carestream DRX-Evolution Plus",       category: "Imaging",        price: 28000000, stock: 2,    description: "Ceiling-suspended digital radiography system" },
+  { sku: "IMG-009", name: "Fujifilm FDR D-EVO II Detector",      category: "Imaging",        price: 9800000,  stock: 6,    description: "Flat panel detector for DR systems" },
+  { sku: "IMG-010", name: "Esaote MyLab X8 Ultrasound",          category: "Imaging",        price: 18500000, stock: 3,    description: "Ultrasound for musculoskeletal and vascular imaging" },
+  { sku: "IMG-011", name: "Mindray Z60 Portable Ultrasound",     category: "Imaging",        price: 6200000,  stock: 10,   description: "Portable color Doppler ultrasound" },
+  { sku: "IMG-012", name: "Shimadzu Flexavision Fluoroscopy",    category: "Imaging",        price: 55000000, stock: 1,    description: "Large-format fluoroscopy with flat panel detector" },
 
   // DIAGNOSTICS (12)
-  { name: "Roche Cobas 6000 Analyzer", category: "Diagnostics", price: 35000000, description: "Fully automated clinical chemistry and immunoassay", stock: 2, unit: "unit", brand: "Roche" },
-  { name: "Abbott Alinity i Immunoassay", category: "Diagnostics", price: 28000000, description: "Random access immunoassay analyzer", stock: 3, unit: "unit", brand: "Abbott" },
-  { name: "Sysmex XN-1000 Hematology Analyzer", category: "Diagnostics", price: 12000000, description: "5-part differential hematology analyzer", stock: 5, unit: "unit", brand: "Sysmex" },
-  { name: "BioMerieux Vitek 2 Microbiology", category: "Diagnostics", price: 22000000, description: "Automated microbial identification and AST", stock: 2, unit: "unit", brand: "BioMerieux" },
-  { name: "Beckman Coulter AU480 Chemistry", category: "Diagnostics", price: 18500000, description: "Mid-volume clinical chemistry analyzer", stock: 3, unit: "unit", brand: "Beckman Coulter" },
-  { name: "Horiba Yumizen H500 Hematology", category: "Diagnostics", price: 8500000, description: "3-part differential hematology analyzer", stock: 8, unit: "unit", brand: "Horiba" },
-  { name: "Mindray BC-6800 Hematology", category: "Diagnostics", price: 9800000, description: "5-part differential automated hematology system", stock: 6, unit: "unit", brand: "Mindray" },
-  { name: "Diasorin Liaison XL Immunoassay", category: "Diagnostics", price: 24000000, description: "CLIA-based random-access immunoassay system", stock: 2, unit: "unit", brand: "Diasorin" },
-  { name: "Stago STA-R Max Coagulation", category: "Diagnostics", price: 16000000, description: "Automated coagulation analyzer", stock: 3, unit: "unit", brand: "Stago" },
-  { name: "Roche Accu-Chek Inform II POCT", category: "Diagnostics", price: 450000, description: "Hospital glucose meter system", stock: 25, unit: "unit", brand: "Roche" },
-  { name: "Abaxis Piccolo Xpress Chemistry", category: "Diagnostics", price: 2800000, description: "Point-of-care comprehensive metabolic panel", stock: 12, unit: "unit", brand: "Abaxis" },
-  { name: "Biosite Triage MeterPro Cardiac", category: "Diagnostics", price: 3500000, description: "POC cardiac marker analyzer (troponin, BNP)", stock: 8, unit: "unit", brand: "Biosite" },
+  { sku: "DX-001",  name: "Roche Cobas 6000 Analyzer",           category: "Diagnostics",    price: 35000000, stock: 2,    description: "Fully automated clinical chemistry and immunoassay" },
+  { sku: "DX-002",  name: "Abbott Alinity i Immunoassay",        category: "Diagnostics",    price: 28000000, stock: 3,    description: "Random access immunoassay analyzer" },
+  { sku: "DX-003",  name: "Sysmex XN-1000 Hematology Analyzer",  category: "Diagnostics",    price: 12000000, stock: 5,    description: "5-part differential hematology analyzer" },
+  { sku: "DX-004",  name: "BioMerieux Vitek 2 Microbiology",     category: "Diagnostics",    price: 22000000, stock: 2,    description: "Automated microbial identification and AST" },
+  { sku: "DX-005",  name: "Beckman Coulter AU480 Chemistry",      category: "Diagnostics",    price: 18500000, stock: 3,    description: "Mid-volume clinical chemistry analyzer" },
+  { sku: "DX-006",  name: "Horiba Yumizen H500 Hematology",      category: "Diagnostics",    price: 8500000,  stock: 8,    description: "3-part differential hematology analyzer" },
+  { sku: "DX-007",  name: "Mindray BC-6800 Hematology",          category: "Diagnostics",    price: 9800000,  stock: 6,    description: "5-part differential automated hematology system" },
+  { sku: "DX-008",  name: "Diasorin Liaison XL Immunoassay",     category: "Diagnostics",    price: 24000000, stock: 2,    description: "CLIA-based random-access immunoassay system" },
+  { sku: "DX-009",  name: "Stago STA-R Max Coagulation",         category: "Diagnostics",    price: 16000000, stock: 3,    description: "Automated coagulation analyzer" },
+  { sku: "DX-010",  name: "Roche Accu-Chek Inform II POCT",      category: "Diagnostics",    price: 450000,   stock: 25,   description: "Hospital glucose meter system" },
+  { sku: "DX-011",  name: "Abaxis Piccolo Xpress Chemistry",      category: "Diagnostics",    price: 2800000,  stock: 12,   description: "Point-of-care comprehensive metabolic panel" },
+  { sku: "DX-012",  name: "Biosite Triage MeterPro Cardiac",     category: "Diagnostics",    price: 3500000,  stock: 8,    description: "POC cardiac marker analyzer (troponin, BNP)" },
 
   // ICU (10)
-  { name: "Dräger Evita V300 Ventilator", category: "ICU", price: 18000000, description: "Advanced ICU ventilator with neonatology modes", stock: 5, unit: "unit", brand: "Dräger" },
-  { name: "Hamilton G5 ICU Ventilator", category: "ICU", price: 22000000, description: "Adaptive support ventilation for critical care", stock: 3, unit: "unit", brand: "Hamilton Medical" },
-  { name: "Philips IntelliVue MX800 Monitor", category: "ICU", price: 8500000, description: "High-acuity patient monitor for ICU", stock: 8, unit: "unit", brand: "Philips" },
-  { name: "Edwards Vigileo Hemodynamic Monitor", category: "ICU", price: 6200000, description: "Minimally invasive cardiac output monitoring", stock: 5, unit: "unit", brand: "Edwards Lifesciences" },
-  { name: "Fresenius Kabi Agilia VP Infusion Pump", category: "ICU", price: 850000, description: "Volumetric infusion pump with TCI module", stock: 30, unit: "unit", brand: "Fresenius Kabi" },
-  { name: "Mindray WATO EX-65 Anesthesia", category: "ICU", price: 14000000, description: "Anesthesia machine with advanced ventilation", stock: 4, unit: "unit", brand: "Mindray" },
-  { name: "Zoll E Series Defibrillator", category: "ICU", price: 3500000, description: "Biphasic defibrillator/monitor with CPR feedback", stock: 8, unit: "unit", brand: "Zoll Medical" },
-  { name: "Natus Neurology NicView Camera", category: "ICU", price: 1200000, description: "NICU bedside camera for remote viewing", stock: 12, unit: "unit", brand: "Natus" },
-  { name: "Medtronic INVOS Cerebral Oximeter", category: "ICU", price: 4500000, description: "Noninvasive regional cerebral oxygen monitoring", stock: 5, unit: "unit", brand: "Medtronic" },
-  { name: "GE Giraffe Warmer Incubator", category: "ICU", price: 7800000, description: "Neonatal warmer/incubator combination", stock: 4, unit: "unit", brand: "GE Healthcare" },
+  { sku: "ICU-001", name: "Dräger Evita V300 Ventilator",        category: "ICU",            price: 18000000, stock: 5,    description: "Advanced ICU ventilator with neonatology modes" },
+  { sku: "ICU-002", name: "Hamilton G5 ICU Ventilator",          category: "ICU",            price: 22000000, stock: 3,    description: "Adaptive support ventilation for critical care" },
+  { sku: "ICU-003", name: "Philips IntelliVue MX800 Monitor",    category: "ICU",            price: 8500000,  stock: 8,    description: "High-acuity patient monitor for ICU" },
+  { sku: "ICU-004", name: "Edwards Vigileo Hemodynamic Monitor", category: "ICU",            price: 6200000,  stock: 5,    description: "Minimally invasive cardiac output monitoring" },
+  { sku: "ICU-005", name: "Fresenius Kabi Agilia VP Infusion",   category: "ICU",            price: 850000,   stock: 30,   description: "Volumetric infusion pump with TCI module" },
+  { sku: "ICU-006", name: "Mindray WATO EX-65 Anesthesia",       category: "ICU",            price: 14000000, stock: 4,    description: "Anesthesia machine with advanced ventilation" },
+  { sku: "ICU-007", name: "Zoll E Series Defibrillator",         category: "ICU",            price: 3500000,  stock: 8,    description: "Biphasic defibrillator/monitor with CPR feedback" },
+  { sku: "ICU-008", name: "Natus NicView NICU Camera",           category: "ICU",            price: 1200000,  stock: 12,   description: "NICU bedside camera for remote viewing" },
+  { sku: "ICU-009", name: "Medtronic INVOS Cerebral Oximeter",   category: "ICU",            price: 4500000,  stock: 5,    description: "Noninvasive regional cerebral oxygen monitoring" },
+  { sku: "ICU-010", name: "GE Giraffe Warmer Incubator",         category: "ICU",            price: 7800000,  stock: 4,    description: "Neonatal warmer/incubator combination" },
 
   // SURGERY (10)
-  { name: "Karl Storz Hopkins II Laparoscope", category: "Surgery", price: 12000000, description: "30° 10mm laparoscope with HD optics", stock: 6, unit: "unit", brand: "Karl Storz" },
-  { name: "Olympus VISERA 4K UHD System", category: "Surgery", price: 38000000, description: "4K endoscopy system with fluorescence imaging", stock: 2, unit: "unit", brand: "Olympus" },
-  { name: "Ethicon Harmonic Ace+ Shears", category: "Surgery", price: 850000, description: "Ultrasonic vessel sealing and dissection", stock: 20, unit: "unit", brand: "Ethicon" },
-  { name: "Steris System 1E Sterilizer", category: "Surgery", price: 4500000, description: "Low-temperature liquid sterilization system", stock: 3, unit: "unit", brand: "Steris" },
-  { name: "Medtronic O-arm Surgical Imaging", category: "Surgery", price: 95000000, description: "Intraoperative 3D/2D imaging system", stock: 1, unit: "unit", brand: "Medtronic" },
-  { name: "Stryker 1688 4K Camera System", category: "Surgery", price: 22000000, description: "AIM 4K camera with fluorescence capability", stock: 3, unit: "unit", brand: "Stryker" },
-  { name: "Erbe VIO 300 D Electrosurgery", category: "Surgery", price: 6800000, description: "Advanced HF electrosurgery system", stock: 5, unit: "unit", brand: "Erbe" },
-  { name: "Getinge HS66 Sterilizer", category: "Surgery", price: 8500000, description: "Steam sterilizer for surgical instruments", stock: 3, unit: "unit", brand: "Getinge" },
-  { name: "Zimmer Biomet PowerPro Drill System", category: "Surgery", price: 2200000, description: "Surgical power tool system for orthopedics", stock: 8, unit: "unit", brand: "Zimmer Biomet" },
-  { name: "DePuy Synthes Carbon Fiber Retractor", category: "Surgery", price: 1500000, description: "Radiolucent spine retractor system", stock: 5, unit: "unit", brand: "DePuy Synthes" },
+  { sku: "SRG-001", name: "Karl Storz Hopkins II Laparoscope",   category: "Surgery",        price: 12000000, stock: 6,    description: "30° 10mm laparoscope with HD optics" },
+  { sku: "SRG-002", name: "Olympus VISERA 4K UHD System",        category: "Surgery",        price: 38000000, stock: 2,    description: "4K endoscopy system with fluorescence imaging" },
+  { sku: "SRG-003", name: "Ethicon Harmonic Ace+ Shears",        category: "Surgery",        price: 850000,   stock: 20,   description: "Ultrasonic vessel sealing and dissection" },
+  { sku: "SRG-004", name: "Steris System 1E Sterilizer",         category: "Surgery",        price: 4500000,  stock: 3,    description: "Low-temperature liquid sterilization system" },
+  { sku: "SRG-005", name: "Medtronic O-arm Surgical Imaging",    category: "Surgery",        price: 95000000, stock: 1,    description: "Intraoperative 3D/2D imaging system" },
+  { sku: "SRG-006", name: "Stryker 1688 4K Camera System",       category: "Surgery",        price: 22000000, stock: 3,    description: "AIM 4K camera with fluorescence capability" },
+  { sku: "SRG-007", name: "Erbe VIO 300 D Electrosurgery",       category: "Surgery",        price: 6800000,  stock: 5,    description: "Advanced HF electrosurgery system" },
+  { sku: "SRG-008", name: "Getinge HS66 Steam Sterilizer",       category: "Surgery",        price: 8500000,  stock: 3,    description: "Steam sterilizer for surgical instruments" },
+  { sku: "SRG-009", name: "Zimmer Biomet PowerPro Drill System", category: "Surgery",        price: 2200000,  stock: 8,    description: "Surgical power tool system for orthopedics" },
+  { sku: "SRG-010", name: "DePuy Synthes Carbon Fiber Retractor",category: "Surgery",        price: 1500000,  stock: 5,    description: "Radiolucent spine retractor system" },
 
   // LABORATORY (10)
-  { name: "Eppendorf Mastercycler X50a PCR", category: "Laboratory", price: 4500000, description: "Gradient thermal cycler for molecular diagnostics", stock: 6, unit: "unit", brand: "Eppendorf" },
-  { name: "Thermo Fisher Sorvall Legend X1R Centrifuge", category: "Laboratory", price: 2800000, description: "Refrigerated benchtop centrifuge", stock: 8, unit: "unit", brand: "Thermo Fisher" },
-  { name: "Hettich ROTINA 380R Centrifuge", category: "Laboratory", price: 1850000, description: "Benchtop refrigerated centrifuge for blood processing", stock: 10, unit: "unit", brand: "Hettich" },
-  { name: "Memmert INCOmed CO2 Incubator", category: "Laboratory", price: 3200000, description: "CO2 incubator with IR sensor and direct heat", stock: 5, unit: "unit", brand: "Memmert" },
-  { name: "BioRad T100 Thermal Cycler", category: "Laboratory", price: 2400000, description: "Dual-block PCR thermal cycler", stock: 8, unit: "unit", brand: "Bio-Rad" },
-  { name: "Kern ABT 220-4M Analytical Balance", category: "Laboratory", price: 480000, description: "0.1mg resolution analytical balance", stock: 15, unit: "unit", brand: "Kern" },
-  { name: "Mettler Toledo ML204T Precision Balance", category: "Laboratory", price: 620000, description: "1mg precision balance with draft shield", stock: 12, unit: "unit", brand: "Mettler Toledo" },
-  { name: "Grant SUB Aqua Pro Water Bath", category: "Laboratory", price: 380000, description: "Stable temperature water bath for sample prep", stock: 18, unit: "unit", brand: "Grant" },
-  { name: "Esco Airstream Class II BSC", category: "Laboratory", price: 2900000, description: "Class II Type A2 biological safety cabinet", stock: 4, unit: "unit", brand: "Esco" },
-  { name: "Thermo Fisher 7000 Series Freezer -80°C", category: "Laboratory", price: 4200000, description: "Ultra-low temperature freezer for sample storage", stock: 3, unit: "unit", brand: "Thermo Fisher" },
+  { sku: "LAB-001", name: "Eppendorf Mastercycler X50a PCR",     category: "Laboratory",     price: 4500000,  stock: 6,    description: "Gradient thermal cycler for molecular diagnostics" },
+  { sku: "LAB-002", name: "Thermo Fisher Sorvall Legend X1R",    category: "Laboratory",     price: 2800000,  stock: 8,    description: "Refrigerated benchtop centrifuge" },
+  { sku: "LAB-003", name: "Hettich ROTINA 380R Centrifuge",      category: "Laboratory",     price: 1850000,  stock: 10,   description: "Benchtop refrigerated centrifuge for blood processing" },
+  { sku: "LAB-004", name: "Memmert INCOmed CO2 Incubator",       category: "Laboratory",     price: 3200000,  stock: 5,    description: "CO2 incubator with IR sensor and direct heat" },
+  { sku: "LAB-005", name: "BioRad T100 Thermal Cycler",          category: "Laboratory",     price: 2400000,  stock: 8,    description: "Dual-block PCR thermal cycler" },
+  { sku: "LAB-006", name: "Kern ABT 220-4M Analytical Balance",  category: "Laboratory",     price: 480000,   stock: 15,   description: "0.1mg resolution analytical balance" },
+  { sku: "LAB-007", name: "Mettler Toledo ML204T Balance",       category: "Laboratory",     price: 620000,   stock: 12,   description: "1mg precision balance with draft shield" },
+  { sku: "LAB-008", name: "Grant SUB Aqua Pro Water Bath",       category: "Laboratory",     price: 380000,   stock: 18,   description: "Stable temperature water bath for sample prep" },
+  { sku: "LAB-009", name: "Esco Airstream Class II BSC",         category: "Laboratory",     price: 2900000,  stock: 4,    description: "Class II Type A2 biological safety cabinet" },
+  { sku: "LAB-010", name: "Thermo Fisher 7000 Freezer -80C",     category: "Laboratory",     price: 4200000,  stock: 3,    description: "Ultra-low temperature freezer for sample storage" },
 
   // CONSUMABLES (15)
-  { name: "BD Vacutainer EDTA Tubes 3mL", category: "Consumables", price: 8500, description: "EDTA anticoagulant blood collection tubes", stock: 5000, unit: "box of 100", brand: "BD" },
-  { name: "Becton Dickinson Syringe 5mL Luer Lock", category: "Consumables", price: 4200, description: "5mL disposable syringe with Luer lock tip", stock: 8000, unit: "box of 100", brand: "BD" },
-  { name: "3M Tegaderm Transparent Dressing 10x12cm", category: "Consumables", price: 85000, description: "Transparent film dressing for IV sites", stock: 500, unit: "box of 100", brand: "3M" },
-  { name: "Kimberly-Clark Surgical Gloves Size 7.5", category: "Consumables", price: 38000, description: "Sterile latex surgical gloves", stock: 2000, unit: "box of 50 pairs", brand: "Kimberly-Clark" },
-  { name: "Cardinal Health Nitrile Exam Gloves Medium", category: "Consumables", price: 22000, description: "Powder-free nitrile examination gloves", stock: 5000, unit: "box of 100", brand: "Cardinal Health" },
-  { name: "Smiths Medical Portex Suction Catheter 14Fr", category: "Consumables", price: 12000, description: "Sterile flexible suction catheter", stock: 3000, unit: "box of 50", brand: "Smiths Medical" },
-  { name: "Covidien Kendall SCD Compression Sleeves", category: "Consumables", price: 35000, description: "Sequential compression device sleeves for DVT prevention", stock: 800, unit: "pack of 10", brand: "Covidien" },
-  { name: "Braun Sterican Needle 21G x 1.5 inch", category: "Consumables", price: 6500, description: "Single-use hypodermic needle", stock: 6000, unit: "box of 100", brand: "B. Braun" },
-  { name: "Hospira 0.9% Normal Saline 500mL", category: "Consumables", price: 2500, description: "Normal saline for IV infusion", stock: 3000, unit: "each", brand: "Hospira" },
-  { name: "Baxter Lactated Ringer 1000mL", category: "Consumables", price: 3200, description: "Balanced crystalloid IV solution", stock: 2500, unit: "each", brand: "Baxter" },
-  { name: "Molnlycke Mepilex Border Foam Dressing", category: "Consumables", price: 95000, description: "Self-adherent foam dressing for pressure ulcers", stock: 400, unit: "box of 10", brand: "Molnlycke" },
-  { name: "Smith & Nephew Allevyn Gentle Border", category: "Consumables", price: 88000, description: "Silicone-bordered foam dressing", stock: 350, unit: "box of 10", brand: "Smith & Nephew" },
-  { name: "Natus Hearing Screen Disposable Probe Tips", category: "Consumables", price: 45000, description: "Disposable probe tips for OAE screeners", stock: 1000, unit: "box of 100", brand: "Natus" },
-  { name: "Welch Allyn Specula for Otoscope 4mm", category: "Consumables", price: 18000, description: "Disposable specula for reusable otoscope handles", stock: 1500, unit: "box of 850", brand: "Welch Allyn" },
-  { name: "ConvaTec Sur-Fit Natura Flange 45mm", category: "Consumables", price: 55000, description: "Ostomy flange for two-piece systems", stock: 600, unit: "box of 10", brand: "ConvaTec" },
+  { sku: "CON-001", name: "BD Vacutainer EDTA Tubes 3mL",        category: "Consumables",    price: 8500,     stock: 5000, description: "EDTA anticoagulant blood collection tubes (box 100)" },
+  { sku: "CON-002", name: "BD Syringe 5mL Luer Lock",            category: "Consumables",    price: 4200,     stock: 8000, description: "5mL disposable syringe with Luer lock tip (box 100)" },
+  { sku: "CON-003", name: "3M Tegaderm Transparent Dressing",    category: "Consumables",    price: 85000,    stock: 500,  description: "10x12cm transparent film dressing for IV sites (box 100)" },
+  { sku: "CON-004", name: "Kimberly-Clark Surgical Gloves 7.5",  category: "Consumables",    price: 38000,    stock: 2000, description: "Sterile latex surgical gloves (box 50 pairs)" },
+  { sku: "CON-005", name: "Cardinal Health Nitrile Exam Gloves", category: "Consumables",    price: 22000,    stock: 5000, description: "Powder-free nitrile examination gloves medium (box 100)" },
+  { sku: "CON-006", name: "Smiths Medical Suction Catheter 14Fr",category: "Consumables",    price: 12000,    stock: 3000, description: "Sterile flexible suction catheter (box 50)" },
+  { sku: "CON-007", name: "Covidien SCD Compression Sleeves",    category: "Consumables",    price: 35000,    stock: 800,  description: "Sequential compression device sleeves for DVT prevention" },
+  { sku: "CON-008", name: "Braun Sterican Needle 21G x 1.5in",   category: "Consumables",    price: 6500,     stock: 6000, description: "Single-use hypodermic needle (box 100)" },
+  { sku: "CON-009", name: "Hospira Normal Saline 0.9% 500mL",    category: "Consumables",    price: 2500,     stock: 3000, description: "Normal saline for IV infusion" },
+  { sku: "CON-010", name: "Baxter Lactated Ringer 1000mL",       category: "Consumables",    price: 3200,     stock: 2500, description: "Balanced crystalloid IV solution" },
+  { sku: "CON-011", name: "Molnlycke Mepilex Border 10x10cm",    category: "Consumables",    price: 95000,    stock: 400,  description: "Self-adherent foam dressing for pressure ulcers (box 10)" },
+  { sku: "CON-012", name: "Smith & Nephew Allevyn Gentle Border",category: "Consumables",    price: 88000,    stock: 350,  description: "Silicone-bordered foam dressing (box 10)" },
+  { sku: "CON-013", name: "Natus OAE Disposable Probe Tips",     category: "Consumables",    price: 45000,    stock: 1000, description: "Disposable probe tips for OAE screeners (box 100)" },
+  { sku: "CON-014", name: "Welch Allyn Otoscope Specula 4mm",    category: "Consumables",    price: 18000,    stock: 1500, description: "Disposable specula for reusable otoscope handles" },
+  { sku: "CON-015", name: "ConvaTec Sur-Fit Natura Flange 45mm", category: "Consumables",    price: 55000,    stock: 600,  description: "Ostomy flange for two-piece systems (box 10)" },
 
   // MONITORING (10)
-  { name: "Philips MX40 Wearable Patient Monitor", category: "Monitoring", price: 4200000, description: "Wireless ambulatory patient monitor", stock: 15, unit: "unit", brand: "Philips" },
-  { name: "Masimo Root Patient Monitoring Platform", category: "Monitoring", price: 3800000, description: "Multifunctional patient monitoring hub", stock: 10, unit: "unit", brand: "Masimo" },
-  { name: "Mindray BeneVision N19 Monitor", category: "Monitoring", price: 2900000, description: "19-inch touchscreen patient monitor", stock: 12, unit: "unit", brand: "Mindray" },
-  { name: "GE CARESCAPE B650 Monitor", category: "Monitoring", price: 5500000, description: "Patient data module with advanced analytics", stock: 8, unit: "unit", brand: "GE Healthcare" },
-  { name: "Welch Allyn Connex Vital Signs Monitor", category: "Monitoring", price: 1200000, description: "Automated vital signs spot-check station", stock: 20, unit: "unit", brand: "Welch Allyn" },
-  { name: "Nellcor PM10N Pulse Oximeter", category: "Monitoring", price: 380000, description: "Handheld pulse oximeter with SpO2/PR", stock: 40, unit: "unit", brand: "Nellcor" },
-  { name: "Mortara ELI 380 ECG Machine", category: "Monitoring", price: 2100000, description: "12-lead resting ECG system with interpretation", stock: 8, unit: "unit", brand: "Mortara" },
-  { name: "Spacelabs Qube Ambulatory BP Monitor", category: "Monitoring", price: 950000, description: "24-hour ambulatory blood pressure monitor", stock: 15, unit: "unit", brand: "Spacelabs" },
-  { name: "Nonin 3100 WristOx Pulse Oximeter", category: "Monitoring", price: 280000, description: "Wrist-worn pulse oximeter for continuous monitoring", stock: 30, unit: "unit", brand: "Nonin" },
-  { name: "Draeger Infinity Delta Monitor", category: "Monitoring", price: 3200000, description: "Modular bedside monitor for acute care", stock: 6, unit: "unit", brand: "Dräger" },
+  { sku: "MON-001", name: "Philips MX40 Wearable Monitor",       category: "Monitoring",     price: 4200000,  stock: 15,   description: "Wireless ambulatory patient monitor" },
+  { sku: "MON-002", name: "Masimo Root Patient Platform",        category: "Monitoring",     price: 3800000,  stock: 10,   description: "Multifunctional patient monitoring hub" },
+  { sku: "MON-003", name: "Mindray BeneVision N19 Monitor",      category: "Monitoring",     price: 2900000,  stock: 12,   description: "19-inch touchscreen patient monitor" },
+  { sku: "MON-004", name: "GE CARESCAPE B650 Monitor",           category: "Monitoring",     price: 5500000,  stock: 8,    description: "Patient data module with advanced analytics" },
+  { sku: "MON-005", name: "Welch Allyn Connex Vital Signs",      category: "Monitoring",     price: 1200000,  stock: 20,   description: "Automated vital signs spot-check station" },
+  { sku: "MON-006", name: "Nellcor PM10N Pulse Oximeter",        category: "Monitoring",     price: 380000,   stock: 40,   description: "Handheld pulse oximeter with SpO2/PR" },
+  { sku: "MON-007", name: "Mortara ELI 380 ECG Machine",         category: "Monitoring",     price: 2100000,  stock: 8,    description: "12-lead resting ECG system with interpretation" },
+  { sku: "MON-008", name: "Spacelabs Qube Ambulatory BP Monitor",category: "Monitoring",     price: 950000,   stock: 15,   description: "24-hour ambulatory blood pressure monitor" },
+  { sku: "MON-009", name: "Nonin 3100 WristOx Pulse Oximeter",   category: "Monitoring",     price: 280000,   stock: 30,   description: "Wrist-worn pulse oximeter for continuous monitoring" },
+  { sku: "MON-010", name: "Draeger Infinity Delta Monitor",       category: "Monitoring",     price: 3200000,  stock: 6,    description: "Modular bedside monitor for acute care" },
 
   // DENTAL (10)
-  { name: "Planmeca ProMax 3D CBCT", category: "Dental", price: 48000000, description: "Cone beam CT for dental and maxillofacial imaging", stock: 2, unit: "unit", brand: "Planmeca" },
-  { name: "Dentsply Sirona Cerec Primescan Scanner", category: "Dental", price: 28000000, description: "Intraoral scanner for chairside CAD/CAM", stock: 3, unit: "unit", brand: "Dentsply Sirona" },
-  { name: "Acteon Satelec P5 Newtron Scaler", category: "Dental", price: 850000, description: "Piezoelectric ultrasonic scaler with 5 presets", stock: 15, unit: "unit", brand: "Acteon" },
-  { name: "Bien Air CA 1:5L Contra-angle Handpiece", category: "Dental", price: 620000, description: "Contra-angle 1:5 speed-increasing handpiece", stock: 20, unit: "unit", brand: "Bien-Air" },
-  { name: "Mectron Piezosurgery Touch", category: "Dental", price: 4200000, description: "Piezoelectric bone surgery unit", stock: 4, unit: "unit", brand: "Mectron" },
-  { name: "SDI Riva Self Cure GIC Powder/Liquid", category: "Dental", price: 38000, description: "Self-curing glass ionomer cement", stock: 200, unit: "pack", brand: "SDI" },
-  { name: "3M ESPE Filtek Supreme Ultra Composite", category: "Dental", price: 45000, description: "Universal nanofilled composite restorative", stock: 300, unit: "syringe", brand: "3M" },
-  { name: "Heraeus Kulzer Venus Pearl Composite", category: "Dental", price: 35000, description: "Nano-hybrid composite for anterior/posterior", stock: 250, unit: "syringe", brand: "Heraeus Kulzer" },
-  { name: "Kerr Total Etch Etchant Gel 37%", category: "Dental", price: 22000, description: "Phosphoric acid etching gel", stock: 400, unit: "pack of 10 syringes", brand: "Kerr" },
-  { name: "Dentsply ProTaper Gold Rotary Files", category: "Dental", price: 85000, description: "Endodontic rotary file system", stock: 150, unit: "pack of 6", brand: "Dentsply" },
+  { sku: "DNT-001", name: "Planmeca ProMax 3D CBCT",             category: "Dental",         price: 48000000, stock: 2,    description: "Cone beam CT for dental and maxillofacial imaging" },
+  { sku: "DNT-002", name: "Dentsply Sirona Cerec Primescan",     category: "Dental",         price: 28000000, stock: 3,    description: "Intraoral scanner for chairside CAD/CAM" },
+  { sku: "DNT-003", name: "Acteon Satelec P5 Newtron Scaler",    category: "Dental",         price: 850000,   stock: 15,   description: "Piezoelectric ultrasonic scaler with 5 presets" },
+  { sku: "DNT-004", name: "Bien Air CA 1:5L Handpiece",          category: "Dental",         price: 620000,   stock: 20,   description: "Contra-angle 1:5 speed-increasing handpiece" },
+  { sku: "DNT-005", name: "Mectron Piezosurgery Touch",          category: "Dental",         price: 4200000,  stock: 4,    description: "Piezoelectric bone surgery unit" },
+  { sku: "DNT-006", name: "SDI Riva Self Cure GIC",              category: "Dental",         price: 38000,    stock: 200,  description: "Self-curing glass ionomer cement (pack)" },
+  { sku: "DNT-007", name: "3M Filtek Supreme Ultra Composite",   category: "Dental",         price: 45000,    stock: 300,  description: "Universal nanofilled composite restorative (syringe)" },
+  { sku: "DNT-008", name: "Heraeus Kulzer Venus Pearl Composite",category: "Dental",         price: 35000,    stock: 250,  description: "Nano-hybrid composite anterior/posterior (syringe)" },
+  { sku: "DNT-009", name: "Kerr Total Etch Etchant Gel 37%",     category: "Dental",         price: 22000,    stock: 400,  description: "Phosphoric acid etching gel (pack of 10 syringes)" },
+  { sku: "DNT-010", name: "Dentsply ProTaper Gold Rotary Files", category: "Dental",         price: 85000,    stock: 150,  description: "Endodontic rotary file system (pack of 6)" },
 
   // REHABILITATION (11)
-  { name: "Biodex System 4 Pro Dynamometer", category: "Rehabilitation", price: 18000000, description: "Isokinetic dynamometer for muscle testing", stock: 3, unit: "unit", brand: "Biodex" },
-  { name: "BTL-6000 HIFU Physiotherapy", category: "Rehabilitation", price: 8500000, description: "High intensity ultrasound for deep tissue therapy", stock: 4, unit: "unit", brand: "BTL" },
-  { name: "Enraf Nonius Sonopuls 492 Ultrasound", category: "Rehabilitation", price: 1200000, description: "Therapeutic ultrasound with combo therapy", stock: 8, unit: "unit", brand: "Enraf-Nonius" },
-  { name: "Medelec Synergy EMG/NCS Machine", category: "Rehabilitation", price: 12000000, description: "Electromyography and nerve conduction system", stock: 2, unit: "unit", brand: "Medelec" },
-  { name: "DJO DonJoy Reaction Web Knee Brace", category: "Rehabilitation", price: 85000, description: "Lightweight open patella knee brace", stock: 100, unit: "unit", brand: "DJO" },
-  { name: "Patterson Medical Standard Parallel Bars", category: "Rehabilitation", price: 650000, description: "Height-adjustable parallel walking bars", stock: 10, unit: "unit", brand: "Patterson Medical" },
-  { name: "Permobil M3 Power Wheelchair", category: "Rehabilitation", price: 5800000, description: "Power wheelchair with tilt-in-space and power seat elevation", stock: 5, unit: "unit", brand: "Permobil" },
-  { name: "Invacare Platinum Mobile Oxygen", category: "Rehabilitation", price: 380000, description: "Portable oxygen concentrator 3L/min continuous", stock: 20, unit: "unit", brand: "Invacare" },
-  { name: "Stryker Medical-Surgical Stretcher 1550", category: "Rehabilitation", price: 1800000, description: "Transport stretcher with power head section", stock: 8, unit: "unit", brand: "Stryker" },
-  { name: "Hausmann Adjustable Treatment Table", category: "Rehabilitation", price: 420000, description: "Height-adjustable physical therapy table", stock: 12, unit: "unit", brand: "Hausmann" },
-  { name: "Natus Tympstar Pro Tympanometer", category: "Rehabilitation", price: 2100000, description: "Clinical middle ear analyzer and audiometer", stock: 5, unit: "unit", brand: "Natus" },
+  { sku: "RHB-001", name: "Biodex System 4 Pro Dynamometer",     category: "Rehabilitation", price: 18000000, stock: 3,    description: "Isokinetic dynamometer for muscle testing" },
+  { sku: "RHB-002", name: "BTL-6000 HIFU Physiotherapy",         category: "Rehabilitation", price: 8500000,  stock: 4,    description: "High intensity ultrasound for deep tissue therapy" },
+  { sku: "RHB-003", name: "Enraf Nonius Sonopuls 492",           category: "Rehabilitation", price: 1200000,  stock: 8,    description: "Therapeutic ultrasound with combo therapy" },
+  { sku: "RHB-004", name: "Medelec Synergy EMG/NCS Machine",     category: "Rehabilitation", price: 12000000, stock: 2,    description: "Electromyography and nerve conduction system" },
+  { sku: "RHB-005", name: "DJO DonJoy Reaction Web Knee Brace",  category: "Rehabilitation", price: 85000,    stock: 100,  description: "Lightweight open patella knee brace" },
+  { sku: "RHB-006", name: "Patterson Medical Parallel Bars",     category: "Rehabilitation", price: 650000,   stock: 10,   description: "Height-adjustable parallel walking bars" },
+  { sku: "RHB-007", name: "Permobil M3 Power Wheelchair",        category: "Rehabilitation", price: 5800000,  stock: 5,    description: "Power wheelchair with tilt-in-space and elevation" },
+  { sku: "RHB-008", name: "Invacare Platinum Mobile Oxygen 3L",  category: "Rehabilitation", price: 380000,   stock: 20,   description: "Portable oxygen concentrator 3L/min continuous" },
+  { sku: "RHB-009", name: "Stryker Medical-Surgical Stretcher",  category: "Rehabilitation", price: 1800000,  stock: 8,    description: "Transport stretcher with power head section" },
+  { sku: "RHB-010", name: "Hausmann Adjustable Treatment Table", category: "Rehabilitation", price: 420000,   stock: 12,   description: "Height-adjustable physical therapy table" },
+  { sku: "RHB-011", name: "Natus Tympstar Pro Tympanometer",     category: "Rehabilitation", price: 2100000,  stock: 5,    description: "Clinical middle ear analyzer and audiometer" },
 ]
+
+function trackingCode() {
+  return "CAD-" + Date.now().toString(36).toUpperCase() + "-" + Math.random().toString(36).slice(2, 6).toUpperCase()
+}
+
+function scheduleCode() {
+  return "SCH-" + Date.now().toString(36).toUpperCase() + "-" + Math.random().toString(36).slice(2, 5).toUpperCase()
+}
+
+function bookingCode() {
+  return "BKG-" + Date.now().toString(36).toUpperCase() + "-" + Math.random().toString(36).slice(2, 5).toUpperCase()
+}
 
 // ─── SEED ────────────────────────────────────────────────────────────────────
 
@@ -182,22 +195,19 @@ async function main() {
   }
 
   // ── Products ──────────────────────────────────────────────────────────────
+  // Product schema: id, name, description, category, price, stock, sku, image?, specs?
   let productCount = 0
   for (const p of PRODUCTS) {
     await prisma.product.upsert({
-      where: { id: `seed-${p.name.replace(/\s+/g, "-").toLowerCase().slice(0, 40)}` },
+      where: { sku: p.sku },
       update: {},
       create: {
-        id: `seed-${p.name.replace(/\s+/g, "-").toLowerCase().slice(0, 40)}`,
         name: p.name,
+        description: p.description,
         category: p.category,
         price: p.price,
-        description: p.description,
         stock: p.stock,
-        unit: p.unit,
-        brand: p.brand ?? p.name.split(" ")[0],
-        images: [],
-        isActive: true,
+        sku: p.sku,
       },
     })
     productCount++
@@ -205,6 +215,7 @@ async function main() {
   console.log(`  ✓ Products: ${productCount} seeded`)
 
   // ── Technician Profile ────────────────────────────────────────────────────
+  // TechnicianProfile fields: firstName, lastName, phone, state, city, baseAddress (not address)
   const techUserId = createdUsers["technician"]
   const existingProfile = await prisma.technicianProfile.findUnique({ where: { userId: techUserId } })
   if (!existingProfile) {
@@ -217,7 +228,7 @@ async function main() {
         specializations: ["ULTRASOUND", "X_RAY", "ICU_EQUIPMENT", "VENTILATORS"],
         state: "Lagos",
         city: "Ikeja",
-        address: "14 Allen Avenue, Ikeja",
+        baseAddress: "14 Allen Avenue, Ikeja",
         status: "ACTIVE",
         isAvailable: true,
         isOnJob: false,
@@ -232,6 +243,10 @@ async function main() {
   }
 
   // ── Supplier ──────────────────────────────────────────────────────────────
+  // Supplier fields: companyName, contactName (required), email, phone, category (not categories),
+  //                  address, city, state, country, cacNumber (not registrationNumber), taxId,
+  //                  status, description, rating, totalOrders
+  // No: registrationNumber, kycVerified, completedOrders
   const supplierUserId = createdUsers["supplier"]
   const existingSupplier = await prisma.supplier.findFirst({ where: { userId: supplierUserId } })
   if (!existingSupplier) {
@@ -239,7 +254,8 @@ async function main() {
       data: {
         userId: supplierUserId,
         companyName: "MedTech Supply Nigeria Ltd",
-        registrationNumber: "RC-1234567",
+        contactName: "Chukwuemeka Obi",
+        cacNumber: "RC-1234567",
         taxId: "TIN-987654321",
         phone: "+2348012345678",
         email: "supplier@cadical.com",
@@ -248,38 +264,45 @@ async function main() {
         city: "Lagos Island",
         state: "Lagos",
         country: "Nigeria",
-        categories: ["Imaging", "Diagnostics", "ICU", "Monitoring"],
+        category: ["Imaging", "Diagnostics", "ICU", "Monitoring"],
         description: "Leading supplier of diagnostic and imaging equipment across West Africa",
         status: "APPROVED",
-        kycVerified: true,
         rating: 4.5,
         totalOrders: 87,
-        completedOrders: 83,
       },
     })
     console.log("  ✓ Supplier profile created")
   }
 
   // ── Institution ───────────────────────────────────────────────────────────
-  const hospitalUserId = createdUsers["hospital"]
-  const existingInstitution = await prisma.institution.findFirst({ where: { name: "Lagos General Hospital" } })
+  // Institution fields: instName (not name), instType (not type), cac (not registrationNumber),
+  //                     state, lga, address, contactName, designation, phone, email,
+  //                     services[], specialistOpts[], consultOpts[], reagentOpts[], eduOpts[],
+  //                     accountEmail, passwordHash
+  const existingInstitution = await prisma.institution.findFirst({ where: { instName: "Lagos General Hospital" } })
   let institutionId: string | undefined
 
   if (!existingInstitution) {
     const inst = await prisma.institution.create({
       data: {
-        name: "Lagos General Hospital",
-        type: "PUBLIC_HOSPITAL",
-        registrationNumber: "LGH-2001-0042",
+        instName: "Lagos General Hospital",
+        instType: "PUBLIC_HOSPITAL",
+        cac: "LGH-2001-0042",
+        state: "Lagos",
+        lga: "Lagos Island",
+        address: "1 Hospital Road, Lagos Island, Lagos",
+        contactName: "Dr. Adaeze Nwosu",
+        designation: "Medical Director",
         phone: "+2341234567890",
         email: "hospital@cadical.com",
-        website: "https://lagosgeneralhospital.gov.ng",
-        address: "1 Hospital Road, Lagos Island",
-        city: "Lagos",
-        state: "Lagos",
-        country: "Nigeria",
-        beds: 350,
-        isVerified: true,
+        accountEmail: "hospital@cadical.com",
+        passwordHash: passwordHash,
+        bedCapacity: 350,
+        services: ["Emergency", "Surgery", "Radiology", "Laboratory"],
+        specialistOpts: ["Cardiology", "Neurology", "Oncology"],
+        consultOpts: ["Outpatient", "Telemedicine"],
+        reagentOpts: ["Chemistry", "Hematology"],
+        eduOpts: ["Training", "Internship"],
       },
     })
     institutionId = inst.id
@@ -289,30 +312,30 @@ async function main() {
   }
 
   // ── Sample Orders ─────────────────────────────────────────────────────────
+  // Order fields: userId, totalAmount, status, trackingCode (required unique),
+  //               shippingAddress (single string, not deliveryAddress/City/State/Country)
+  // OrderItem fields: orderId, productId, quantity, price (not unitPrice/totalPrice)
+  // No: paymentStatus
   const products = await prisma.product.findMany({ take: 5 })
   const customerUserId = createdUsers["customer"]
 
   if (products.length > 0) {
+    const statuses = ["PENDING", "CONFIRMED", "DELIVERED"] as const
     for (let i = 0; i < 3; i++) {
       const product = products[i % products.length]
       const qty = Math.floor(Math.random() * 3) + 1
-      const statuses = ["PENDING", "CONFIRMED", "SHIPPED", "DELIVERED"]
       await prisma.order.create({
         data: {
           userId: customerUserId,
           totalAmount: product.price * qty,
-          status: statuses[i] as any,
-          paymentStatus: i < 2 ? "PAID" : "PENDING",
-          deliveryAddress: "15 Victoria Island, Lagos",
-          deliveryCity: "Lagos",
-          deliveryState: "Lagos",
-          deliveryCountry: "Nigeria",
-          items: {
+          status: statuses[i],
+          trackingCode: trackingCode(),
+          shippingAddress: "15 Victoria Island, Lagos, Nigeria",
+          orderItems: {
             create: {
               productId: product.id,
               quantity: qty,
-              unitPrice: product.price,
-              totalPrice: product.price * qty,
+              price: product.price,
             },
           },
         },
@@ -322,21 +345,29 @@ async function main() {
   }
 
   // ── Maintenance Schedule ──────────────────────────────────────────────────
+  // MaintenanceSchedule fields: scheduleCode (required unique), equipmentName, equipmentModel?,
+  //                             equipmentSerial (not serialNumber), serviceType (required),
+  //                             frequency, siteAddress (required), siteState (required),
+  //                             nextDueDate, lastCompletedAt (not lastMaintenanceDate),
+  //                             notes?, userId?, institutionId?
+  // No: manufacturer, isOverdue
   if (institutionId) {
     const existing = await prisma.maintenanceSchedule.findFirst({ where: { institutionId } })
     if (!existing) {
       await prisma.maintenanceSchedule.create({
         data: {
-          userId: hospitalUserId,
+          scheduleCode: scheduleCode(),
+          userId: createdUsers["hospital"],
           institutionId,
           equipmentName: "GE Voluson E10 Ultrasound",
           equipmentModel: "Voluson E10",
-          serialNumber: "GE-ULT-2024-001",
-          manufacturer: "GE Healthcare",
+          equipmentSerial: "GE-ULT-2024-001",
+          serviceType: "PREVENTIVE_MAINTENANCE",
           frequency: "QUARTERLY",
-          lastMaintenanceDate: new Date("2026-02-15"),
+          siteAddress: "1 Hospital Road, Lagos Island, Lagos",
+          siteState: "Lagos",
+          lastCompletedAt: new Date("2026-02-15"),
           nextDueDate: new Date("2026-05-15"),
-          isOverdue: true,
           notes: "Quarterly preventive maintenance per manufacturer spec",
         },
       })
@@ -345,31 +376,39 @@ async function main() {
   }
 
   // ── Service Booking ───────────────────────────────────────────────────────
+  // ServiceBooking fields: bookingCode (required unique), serviceType (required),
+  //                        urgency, equipmentName, equipmentModel?, equipmentSerial (not serialNumber),
+  //                        issueDescription (required, not faultDescription),
+  //                        siteAddress (required), siteCity (required), siteState (required),
+  //                        siteContact (not contactPerson), sitePhone (not contactPhone),
+  //                        preferredDate?, status, assignedTechId (not technicianId)
+  // StatusEvent: status, message (required), notes (not note)
   const techProfile = await prisma.technicianProfile.findUnique({ where: { userId: techUserId } })
   const existingBooking = await prisma.serviceBooking.findFirst({ where: { userId: customerUserId } })
   if (!existingBooking && techProfile) {
     await prisma.serviceBooking.create({
       data: {
+        bookingCode: bookingCode(),
         userId: customerUserId,
         serviceType: "REPAIR",
         urgency: "URGENT",
         equipmentName: "Philips IntelliVue MX800 Monitor",
         equipmentModel: "MX800",
-        serialNumber: "PH-MON-2023-445",
-        manufacturer: "Philips",
-        faultDescription: "Screen flickering and intermittent alarm failure",
-        facilityName: "Victoria Island Medical Centre",
-        facilityAddress: "24 Adeola Odeku Street, Victoria Island, Lagos",
-        contactPerson: "Dr. Amaka Eze",
-        contactPhone: "+2348023456001",
+        equipmentSerial: "PH-MON-2023-445",
+        issueDescription: "Screen flickering and intermittent alarm failure during ICU monitoring",
+        siteAddress: "24 Adeola Odeku Street, Victoria Island",
+        siteCity: "Lagos",
+        siteState: "Lagos",
+        siteContact: "Dr. Amaka Eze",
+        sitePhone: "+2348023456001",
         preferredDate: new Date("2026-05-28"),
         status: "TECHNICIAN_ASSIGNED",
-        technicianId: techProfile.id,
+        assignedTechId: techProfile.id,
         statusEvents: {
           create: [
-            { status: "BOOKED", note: "Service request submitted online" },
-            { status: "APPROVED", note: "Request reviewed and approved" },
-            { status: "TECHNICIAN_ASSIGNED", note: "Technician Emeka Okafor assigned" },
+            { status: "BOOKED",               message: "Service request submitted online",         notes: "Customer submitted via web portal" },
+            { status: "APPROVED",             message: "Request reviewed and approved by admin",   notes: "Approved within SLA window" },
+            { status: "TECHNICIAN_ASSIGNED",  message: "Technician Emeka Okafor assigned",        notes: "Auto-assigned based on specialization and proximity" },
           ],
         },
       },
@@ -413,9 +452,32 @@ async function main() {
   // ── Audit Logs ────────────────────────────────────────────────────────────
   await prisma.auditLog.createMany({
     data: [
-      { userId: createdUsers["superadmin"], userEmail: "superadmin@cadical.com", userRole: "superadmin", action: "login", entity: "user", entityId: createdUsers["superadmin"], ipAddress: "197.210.55.1" },
-      { userId: createdUsers["admin"], userEmail: "admin@cadical.com", userRole: "admin", action: "approve", entity: "supplier", entityId: "seed-medtech-supplier", ipAddress: "105.113.22.8" },
-      { userId: createdUsers["admin"], userEmail: "admin@cadical.com", userRole: "admin", action: "update", entity: "product", entityId: products[0]?.id, ipAddress: "105.113.22.8" },
+      {
+        userId: createdUsers["superadmin"],
+        userEmail: "superadmin@cadical.com",
+        userRole: "superadmin",
+        action: "login",
+        entity: "user",
+        entityId: createdUsers["superadmin"],
+        ipAddress: "197.210.55.1",
+      },
+      {
+        userId: createdUsers["admin"],
+        userEmail: "admin@cadical.com",
+        userRole: "admin",
+        action: "approve",
+        entity: "supplier",
+        ipAddress: "105.113.22.8",
+      },
+      {
+        userId: createdUsers["admin"],
+        userEmail: "admin@cadical.com",
+        userRole: "admin",
+        action: "update",
+        entity: "product",
+        entityId: products[0]?.id,
+        ipAddress: "105.113.22.8",
+      },
     ],
   })
   console.log("  ✓ Audit logs created")
