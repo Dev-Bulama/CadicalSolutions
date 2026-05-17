@@ -32,9 +32,11 @@ model User {
   sessions      Session[]
   accounts      Account[]
   clinician     Clinician[]
-  orders    Order[]
-  cartItems CartItem[]
-  
+  orders        Order[]
+  cartItems     CartItem[]
+  supplier      Supplier[]
+  rfqs          RFQ[]
+  bulkOrders    BulkOrder[]
 }
 
 model Session {
@@ -276,6 +278,8 @@ model Institution {
 
   // Relations
   documents       Document[]
+  rfqs            RFQ[]
+  bulkOrders      BulkOrder[]
 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
@@ -369,6 +373,378 @@ enum ProductCategory {
 enum OrderStatus {
   PENDING
   PAID
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+// ─────────────────────────────────────────────
+// CRM INTEGRATION ENGINE
+// ─────────────────────────────────────────────
+
+model CrmConnection {
+  id              String   @id @default(cuid())
+  provider        String   // zoho | hubspot | salesforce | freshsales | custom
+  isActive        Boolean  @default(false)
+  isConnected     Boolean  @default(false)
+
+  // OAuth / API credentials (encrypted at app layer)
+  clientId        String?
+  clientSecret    String?
+  redirectUri     String?
+  accessToken     String?  @db.Text
+  refreshToken    String?  @db.Text
+  tokenExpiresAt  DateTime?
+  organizationId  String?
+  apiDomain       String?  // Zoho data center domain
+
+  // Sync config
+  syncEnabled     Boolean  @default(false)
+  syncInterval    String   @default("hourly") // 5min | 15min | hourly | daily
+  lastSyncAt      DateTime?
+  nextSyncAt      DateTime?
+
+  // Health
+  healthScore     Int      @default(100)
+  lastError       String?
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  fieldMappings   CrmFieldMapping[]
+  syncLogs        CrmSyncLog[]
+  automationRules CrmAutomationRule[]
+  webhookLogs     CrmWebhookLog[]
+  failedJobs      CrmFailedJob[]
+
+  @@map("crm_connection")
+}
+
+model CrmFieldMapping {
+  id              String   @id @default(cuid())
+  connectionId    String
+  connection      CrmConnection @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+
+  entity          String   // contact | account | deal | lead | ticket
+  cadicalField    String
+  crmField        String
+  direction       String   @default("both") // tocrm | fromcrm | both
+  isRequired      Boolean  @default(false)
+  transformFn     String?  // optional JS transform expression
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([connectionId, entity, cadicalField])
+  @@map("crm_field_mapping")
+}
+
+model CrmSyncLog {
+  id              String   @id @default(cuid())
+  connectionId    String
+  connection      CrmConnection @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+
+  syncType        String   // instant | scheduled | manual
+  entity          String   // contact | account | deal | lead
+  direction       String   // push | pull
+  status          String   // running | success | partial | failed
+  recordsTotal    Int      @default(0)
+  recordsSynced   Int      @default(0)
+  recordsFailed   Int      @default(0)
+  errorSummary    String?
+  durationMs      Int?
+
+  startedAt       DateTime @default(now())
+  completedAt     DateTime?
+
+  @@map("crm_sync_log")
+}
+
+model CrmAutomationRule {
+  id              String   @id @default(cuid())
+  connectionId    String
+  connection      CrmConnection @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+
+  name            String
+  description     String?
+  isActive        Boolean  @default(true)
+
+  triggerEvent    String   // order_completed | rfq_submitted | booking_created | user_inactive
+  triggerConfig   Json?    // e.g. { "days": 30 } for inactivity
+
+  actionType      String   // create_deal | create_lead | create_contact | create_ticket | update_stage
+  actionConfig    Json?    // pipeline, stage, owner, tags, etc.
+
+  lastRunAt       DateTime?
+  runCount        Int      @default(0)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("crm_automation_rule")
+}
+
+model CrmWebhookLog {
+  id              String   @id @default(cuid())
+  connectionId    String
+  connection      CrmConnection @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+
+  event           String
+  payload         Json
+  status          String   // received | processed | failed
+  errorMessage    String?
+
+  receivedAt      DateTime @default(now())
+
+  @@map("crm_webhook_log")
+}
+
+model CrmFailedJob {
+  id              String   @id @default(cuid())
+  connectionId    String
+  connection      CrmConnection @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+
+  entity          String
+  operation       String   // create | update | delete
+  payload         Json
+  errorMessage    String
+  retryCount      Int      @default(0)
+  maxRetries      Int      @default(3)
+  status          String   @default("pending") // pending | retrying | resolved | abandoned
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("crm_failed_job")
+}
+
+// ─────────────────────────────────────────────
+// SUPPLIER / VENDOR MARKETPLACE
+// ─────────────────────────────────────────────
+
+model Supplier {
+  id              String   @id @default(cuid())
+  userId          String?  // linked to User if they have an account
+  user            User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  companyName     String
+  contactName     String
+  email           String   @unique
+  phone           String
+  altPhone        String?
+  website         String?
+
+  category        String[] // medical_equipment | consumables | pharmaceuticals | etc.
+  description     String?
+  logo            String?
+
+  // Address
+  address         String
+  city            String
+  state           String
+  country         String   @default("Nigeria")
+
+  // Business info
+  cacNumber       String?
+  taxId           String?
+  nafdacNumber    String?
+  yearEstablished Int?
+
+  // Status
+  status          SupplierStatus @default(PENDING)
+  isActive        Boolean  @default(false)
+  verifiedAt      DateTime?
+  verifiedBy      String?  // admin user id
+
+  // Performance
+  totalProducts   Int      @default(0)
+  totalOrders     Int      @default(0)
+  rating          Float    @default(0)
+  deliveryScore   Float    @default(0)
+
+  documents       SupplierDocument[]
+  products        SupplierProduct[]
+  rfqBids         RFQBid[]
+  bulkOrders      BulkOrder[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("supplier")
+}
+
+model SupplierDocument {
+  id          String   @id @default(cuid())
+  supplierId  String
+  supplier    Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+
+  name        String
+  type        String   // CAC | NAFDAC | TAX | LICENSE | OTHER
+  url         String
+  status      String   @default("pending") // pending | approved | rejected
+  reviewNote  String?
+
+  uploadedAt  DateTime @default(now())
+  reviewedAt  DateTime?
+
+  @@map("supplier_document")
+}
+
+model SupplierProduct {
+  id              String   @id @default(cuid())
+  supplierId      String
+  supplier        Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+
+  name            String
+  description     String
+  category        String
+  brand           String?
+  model           String?
+  sku             String?
+
+  unitPrice       Float
+  bulkPrice       Float?
+  minOrderQty     Int      @default(1)
+  stock           Int      @default(0)
+
+  images          String[]
+  specs           Json?
+  certifications  String[]
+  manualUrl       String?  // PDF manual
+  datasheetUrl    String?
+
+  hasInstallation Boolean  @default(false)
+  hasWarranty     Boolean  @default(false)
+  warrantyMonths  Int?
+  hasMaintenance  Boolean  @default(false)
+
+  isActive        Boolean  @default(true)
+  isApproved      Boolean  @default(false)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("supplier_product")
+}
+
+model RFQ {
+  id              String   @id @default(cuid())
+  rfqCode         String   @unique
+
+  // Requester info
+  userId          String?
+  user            User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  institutionId   String?
+  institution     Institution? @relation(fields: [institutionId], references: [id], onDelete: SetNull)
+
+  contactName     String
+  contactEmail    String
+  contactPhone    String
+  organization    String?
+
+  // Request details
+  title           String
+  description     String
+  category        String[]
+  specifications  String?
+  quantity        Int
+  targetBudget    Float?
+  currency        String   @default("NGN")
+  deliveryDate    DateTime?
+  deliveryAddress String?
+
+  // Attachments
+  attachments     String[]
+
+  status          RFQStatus @default(OPEN)
+  closingDate     DateTime?
+
+  bids            RFQBid[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("rfq")
+}
+
+model RFQBid {
+  id          String   @id @default(cuid())
+  rfqId       String
+  rfq         RFQ      @relation(fields: [rfqId], references: [id], onDelete: Cascade)
+  supplierId  String
+  supplier    Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+
+  unitPrice   Float
+  totalPrice  Float
+  leadTimeDays Int
+  notes       String?
+  attachments String[]
+
+  status      String   @default("submitted") // submitted | shortlisted | accepted | rejected
+
+  submittedAt DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([rfqId, supplierId])
+  @@map("rfq_bid")
+}
+
+model BulkOrder {
+  id              String   @id @default(cuid())
+  bulkCode        String   @unique
+
+  userId          String?
+  user            User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  institutionId   String?
+  institution     Institution? @relation(fields: [institutionId], references: [id], onDelete: SetNull)
+  supplierId      String?
+  supplier        Supplier? @relation(fields: [supplierId], references: [id], onDelete: SetNull)
+
+  contactName     String
+  contactEmail    String
+  contactPhone    String
+  organization    String?
+
+  items           Json     // [{ productName, sku, quantity, unitPrice }]
+  totalAmount     Float
+  currency        String   @default("NGN")
+  discountPercent Float    @default(0)
+  finalAmount     Float
+
+  deliveryAddress String?
+  deliveryDate    DateTime?
+  paymentTerms    String?
+  contractUrl     String?
+
+  status          BulkOrderStatus @default(DRAFT)
+  notes           String?
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("bulk_order")
+}
+
+enum SupplierStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
+
+enum RFQStatus {
+  OPEN
+  CLOSED
+  AWARDED
+  CANCELLED
+}
+
+enum BulkOrderStatus {
+  DRAFT
+  SUBMITTED
+  NEGOTIATING
+  APPROVED
   PROCESSING
   SHIPPED
   DELIVERED
