@@ -29,14 +29,21 @@ model User {
   banExpires    Int? /// Unix timestamp for ban expiration
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  accounts      Account[]
-  clinician     Clinician[]
-  orders        Order[]
-  cartItems     CartItem[]
-  supplier      Supplier[]
-  rfqs          RFQ[]
-  bulkOrders    BulkOrder[]
+  sessions           Session[]
+  accounts           Account[]
+  clinician          Clinician[]
+  orders             Order[]
+  cartItems          CartItem[]
+  supplier           Supplier[]
+  rfqs               RFQ[]
+  bulkOrders         BulkOrder[]
+  serviceBookings    ServiceBooking[]
+  technicianProfile  TechnicianProfile?
+  maintenanceSchedules MaintenanceSchedule[]
+  equipmentRecords   EquipmentRecord[]
+  serviceContracts   ServiceContract[]
+  notifications      Notification[]
+}
 }
 
 model Session {
@@ -277,9 +284,12 @@ model Institution {
   passwordHash    String
 
   // Relations
-  documents       Document[]
-  rfqs            RFQ[]
-  bulkOrders      BulkOrder[]
+  documents             Document[]
+  rfqs                  RFQ[]
+  bulkOrders            BulkOrder[]
+  maintenanceSchedules  MaintenanceSchedule[]
+  equipmentRecords      EquipmentRecord[]
+  serviceContracts      ServiceContract[]
 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
@@ -749,4 +759,460 @@ enum BulkOrderStatus {
   SHIPPED
   DELIVERED
   CANCELLED
+}
+
+// ─────────────────────────────────────────────
+// SERVICE BOOKING + TECHNICIAN ECOSYSTEM
+// ─────────────────────────────────────────────
+
+model ServiceBooking {
+  id               String   @id @default(cuid())
+  bookingCode      String   @unique
+
+  userId           String?
+  user             User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  // Equipment info
+  equipmentName    String
+  equipmentModel   String?
+  equipmentSerial  String?
+  equipmentBrand   String?
+
+  // Service details
+  serviceType      ServiceType
+  urgency          ServiceUrgency @default(NORMAL)
+  issueDescription String
+  severity         String?        // low | medium | high | critical
+  equipmentCondition String?
+
+  // Site info
+  siteAddress      String
+  siteCity         String
+  siteState        String
+  siteContact      String?
+  sitePhone        String?
+
+  // Dynamic fields (JSON for service-type-specific data)
+  dynamicFields    Json?
+
+  // Schedule
+  preferredDate    DateTime?
+  preferredTimeSlot String?
+  alternateDate    DateTime?
+
+  // Media
+  images           String[]
+  documents        String[]
+
+  // Payment
+  estimatedCost    Float?
+  finalCost        Float?
+  paymentStatus    String    @default("unpaid")
+  paymentId        String?
+
+  // Fulfillment
+  status           ServiceStatus @default(BOOKED)
+  assignedTechId   String?
+  assignedTech     TechnicianProfile? @relation(fields: [assignedTechId], references: [id], onDelete: SetNull)
+
+  statusEvents     ServiceStatusEvent[]
+  serviceJob       ServiceJob?
+  equipmentRecord  EquipmentRecord?
+
+  notes            String?
+  adminNotes       String?
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("service_booking")
+}
+
+model ServiceStatusEvent {
+  id            String   @id @default(cuid())
+  bookingId     String
+  booking       ServiceBooking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  status        ServiceStatus
+  message       String
+  notes         String?
+  location      String?
+  updatedBy     String?  // userId or technicianId
+  updatedByRole String?  // admin | technician | system
+
+  createdAt     DateTime @default(now())
+
+  @@map("service_status_event")
+}
+
+model TechnicianProfile {
+  id               String   @id @default(cuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  firstName        String
+  lastName         String
+  phone            String
+  profileImage     String?
+
+  specializations  String[]  // installation | repair | calibration | etc.
+  certifications   String[]
+  yearsOfExperience Int      @default(0)
+
+  // Location
+  state            String
+  city             String
+  baseAddress      String?
+
+  // Availability
+  isAvailable      Boolean  @default(true)
+  isOnJob          Boolean  @default(false)
+  currentLocation  String?  // JSON {lat, lng} — optional live location
+  shareLocation    Boolean  @default(false)
+
+  // Status
+  status           TechStatus @default(ACTIVE)
+  rating           Float    @default(0)
+  totalJobs        Int      @default(0)
+  completedJobs    Int      @default(0)
+
+  serviceBookings  ServiceBooking[]
+  serviceJobs      ServiceJob[]
+  maintenanceAssignments MaintenanceSchedule[]
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("technician_profile")
+}
+
+model ServiceJob {
+  id               String   @id @default(cuid())
+  jobCode          String   @unique
+  bookingId        String   @unique
+  booking          ServiceBooking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  technicianId     String?
+  technician       TechnicianProfile? @relation(fields: [technicianId], references: [id], onDelete: SetNull)
+
+  status           JobStatus @default(ASSIGNED)
+
+  // Technician inputs
+  diagnosticNotes  String?
+  workDone         String?
+  partsUsed        Json?    // [{name, qty, cost}]
+  partsRequested   Json?
+  reportUrl        String?
+  completionImages String[]
+
+  // Timing
+  scheduledAt      DateTime?
+  startedAt        DateTime?
+  completedAt      DateTime?
+  estimatedDuration Int?    // minutes
+
+  // Billing
+  laborCost        Float?
+  partsCost        Float?
+  totalCost        Float?
+  invoiceUrl       String?
+
+  followUpDate     DateTime?
+  followUpNotes    String?
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("service_job")
+}
+
+model MaintenanceSchedule {
+  id               String   @id @default(cuid())
+  scheduleCode     String   @unique
+
+  userId           String?
+  user             User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  institutionId    String?
+  institution      Institution? @relation(fields: [institutionId], references: [id], onDelete: SetNull)
+  technicianId     String?
+  technician       TechnicianProfile? @relation(fields: [technicianId], references: [id], onDelete: SetNull)
+
+  equipmentName    String
+  equipmentModel   String?
+  equipmentSerial  String?
+  serviceType      ServiceType
+  frequency        MaintenanceFrequency
+  siteAddress      String
+  siteState        String
+
+  nextDueDate      DateTime
+  lastCompletedAt  DateTime?
+  isActive         Boolean  @default(true)
+
+  reminderDaysBefore Int    @default(7)
+  autoAssign       Boolean  @default(false)
+
+  notes            String?
+  contractId       String?
+
+  history          MaintenanceLog[]
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("maintenance_schedule")
+}
+
+model MaintenanceLog {
+  id             String   @id @default(cuid())
+  scheduleId     String
+  schedule       MaintenanceSchedule @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+
+  completedAt    DateTime
+  technicianId   String?
+  notes          String?
+  reportUrl      String?
+  partsUsed      Json?
+  cost           Float?
+
+  createdAt      DateTime @default(now())
+
+  @@map("maintenance_log")
+}
+
+model EquipmentRecord {
+  id               String   @id @default(cuid())
+  passportCode     String   @unique
+
+  userId           String?
+  user             User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  institutionId    String?
+  institution      Institution? @relation(fields: [institutionId], references: [id], onDelete: SetNull)
+  bookingId        String?  @unique
+  booking          ServiceBooking? @relation(fields: [bookingId], references: [id], onDelete: SetNull)
+
+  // Equipment identity
+  equipmentName    String
+  brand            String?
+  model            String?
+  serialNumber     String?
+  purchaseDate     DateTime?
+  warrantyExpiry   DateTime?
+  purchasePrice    Float?
+
+  // Health
+  condition        String   @default("good") // excellent | good | fair | poor
+  lastInspectedAt  DateTime?
+  nextMaintenanceAt DateTime?
+
+  serviceHistory   Json?    // array of service events
+  notes            String?
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("equipment_record")
+}
+
+model ServiceContract {
+  id               String   @id @default(cuid())
+  contractCode     String   @unique
+
+  userId           String?
+  user             User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  institutionId    String?
+  institution      Institution? @relation(fields: [institutionId], references: [id], onDelete: SetNull)
+
+  plan             ContractPlan
+  status           ContractStatus @default(ACTIVE)
+
+  startDate        DateTime
+  endDate          DateTime
+  renewalDate      DateTime?
+
+  // SLA
+  responseHours    Int      @default(24)
+  resolutionHours  Int      @default(72)
+  includedVisits   Int      @default(4)
+  usedVisits       Int      @default(0)
+  emergencySupport Boolean  @default(false)
+  dedicatedTechId  String?
+
+  monthlyFee       Float?
+  annualFee        Float?
+  currency         String   @default("NGN")
+
+  equipmentList    Json?    // covered equipment
+  terms            String?
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("service_contract")
+}
+
+// ─────────────────────────────────────────────
+// INTERNAL CHAT SYSTEM
+// ─────────────────────────────────────────────
+
+model ChatRoom {
+  id           String   @id @default(cuid())
+  type         String   // support | technician | supplier | procurement
+  reference    String?  // bookingId / orderId / rfqId
+  participants String[] // userIds
+  isActive     Boolean  @default(true)
+
+  messages     ChatMessage[]
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("chat_room")
+}
+
+model ChatMessage {
+  id         String   @id @default(cuid())
+  roomId     String
+  room       ChatRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  senderId   String
+  senderRole String   // admin | technician | customer | supplier
+  senderName String
+  content    String
+  attachments String[]
+  isRead     Boolean  @default(false)
+  readAt     DateTime?
+
+  createdAt  DateTime @default(now())
+
+  @@map("chat_message")
+}
+
+// ─────────────────────────────────────────────
+// NOTIFICATION CENTER
+// ─────────────────────────────────────────────
+
+model Notification {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type       String   // order | service | payment | maintenance | system | crm
+  title      String
+  message    String
+  actionUrl  String?
+  isRead     Boolean  @default(false)
+  readAt     DateTime?
+
+  // Delivery channels
+  sentEmail  Boolean  @default(false)
+  sentSMS    Boolean  @default(false)
+  sentPush   Boolean  @default(false)
+
+  createdAt  DateTime @default(now())
+
+  @@map("notification")
+}
+
+// ─────────────────────────────────────────────
+// AUDIT LOG
+// ─────────────────────────────────────────────
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  userEmail  String?
+  userRole   String?
+
+  action     String   // create | update | delete | login | approve | reject | sync
+  entity     String   // user | product | order | supplier | booking | crm
+  entityId   String?
+  before     Json?
+  after      Json?
+  ipAddress  String?
+  userAgent  String?
+
+  createdAt  DateTime @default(now())
+
+  @@map("audit_log")
+}
+
+// ─────────────────────────────────────────────
+// ENUMS – SERVICE ECOSYSTEM
+// ─────────────────────────────────────────────
+
+enum ServiceType {
+  INSTALLATION
+  PREVENTIVE_MAINTENANCE
+  REPAIR
+  EMERGENCY_REPAIR
+  INSPECTION
+  CALIBRATION
+  UPGRADE
+  RELOCATION
+  CONSULTATION
+  WARRANTY_SERVICE
+}
+
+enum ServiceUrgency {
+  ROUTINE
+  NORMAL
+  URGENT
+  EMERGENCY
+}
+
+enum ServiceStatus {
+  BOOKED
+  PENDING_APPROVAL
+  APPROVED
+  TECHNICIAN_ASSIGNED
+  TECHNICIAN_ACCEPTED
+  TECHNICIAN_EN_ROUTE
+  INSPECTION_STARTED
+  REPAIR_ONGOING
+  WAITING_FOR_PARTS
+  TESTING
+  COMPLETED
+  INVOICE_GENERATED
+  FOLLOW_UP_SCHEDULED
+  CANCELLED
+}
+
+enum JobStatus {
+  ASSIGNED
+  ACCEPTED
+  REJECTED
+  EN_ROUTE
+  ON_SITE
+  IN_PROGRESS
+  WAITING_PARTS
+  COMPLETED
+  CANCELLED
+}
+
+enum TechStatus {
+  ACTIVE
+  INACTIVE
+  ON_LEAVE
+  SUSPENDED
+}
+
+enum MaintenanceFrequency {
+  WEEKLY
+  MONTHLY
+  QUARTERLY
+  BIANNUAL
+  ANNUAL
+}
+
+enum ContractPlan {
+  BASIC
+  PREMIUM
+  ENTERPRISE
+}
+
+enum ContractStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+  SUSPENDED
 }

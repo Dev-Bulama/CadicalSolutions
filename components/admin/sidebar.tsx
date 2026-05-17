@@ -6,7 +6,8 @@ import { cn } from "@/lib/utils"
 import {
   LayoutDashboard, Package, Users, LogOut, ShoppingCart,
   Calendar, Building2, GitBranch, Truck, Plug, BarChart3,
-  ChevronDown, ChevronRight, Stethoscope,
+  ChevronDown, ChevronRight, Stethoscope, Wrench, Shield,
+  Bell, ClipboardList,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
@@ -52,6 +53,18 @@ const navItems: NavItem[] = [
       { name: "Setup Wizard", href: "/admin/integrations/crm/setup-wizard" },
     ],
   },
+  {
+    name: "Services",
+    icon: Wrench,
+    children: [
+      { name: "Service Jobs", href: "/admin/service-jobs" },
+      { name: "Technicians", href: "/admin/technicians" },
+      { name: "Maintenance", href: "/admin/maintenance" },
+      { name: "Contracts", href: "/admin/contracts" },
+    ],
+  },
+  { name: "Analytics", href: "/admin/analytics", icon: BarChart3 },
+  { name: "Audit Logs", href: "/admin/audit-logs", icon: Shield },
   { name: "Users", href: "/admin/users", icon: Users },
 ]
 
