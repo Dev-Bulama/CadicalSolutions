@@ -102,7 +102,7 @@ export async function PUT(req: NextRequest) {
 
   const existing = await prisma.serviceJob.findUnique({
     where: { id },
-    include: { booking: { select: { userId: true, bookingCode: true, bookingId: true } } },
+    include: { booking: { select: { userId: true, bookingCode: true } } },
   })
   if (!existing) return NextResponse.json({ error: "Job not found" }, { status: 404 })
 
