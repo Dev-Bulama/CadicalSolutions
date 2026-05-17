@@ -1,0 +1,70 @@
+##############################################################################
+# Cadical Solutions — Docker Compose (production-like local stack)
+##############################################################################
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: cadical-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: cadical
+      POSTGRES_USER: cadical
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-cadical_dev_pass}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cadical"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cadical-app
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://cadical:${DB_PASSWORD:-cadical_dev_pass}@postgres:5432/cadical?sslmode=disable
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      BETTER_AUTH_URL: ${BETTER_AUTH_URL:-http://localhost:3000}
+      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-http://localhost:3000}
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}
+      FLUTTERWAVE_SECRET_KEY: ${FLUTTERWAVE_SECRET_KEY}
+      NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY: ${NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY}
+      PUSHER_APP_ID: ${PUSHER_APP_ID}
+      PUSHER_KEY: ${PUSHER_KEY}
+      PUSHER_SECRET: ${PUSHER_SECRET}
+      PUSHER_CLUSTER: ${PUSHER_CLUSTER:-eu}
+      NEXT_PUBLIC_PUSHER_KEY: ${NEXT_PUBLIC_PUSHER_KEY}
+      NEXT_PUBLIC_PUSHER_CLUSTER: ${NEXT_PUBLIC_PUSHER_CLUSTER:-eu}
+      ZOHO_CLIENT_ID: ${ZOHO_CLIENT_ID}
+      ZOHO_CLIENT_SECRET: ${ZOHO_CLIENT_SECRET}
+      ZOHO_REDIRECT_URI: ${ZOHO_REDIRECT_URI}
+    ports:
+      - "3000:3000"
+
+  # Run migrations on startup
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cadical-migrate
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://cadical:${DB_PASSWORD:-cadical_dev_pass}@postgres:5432/cadical?sslmode=disable
+    command: ["npx", "prisma", "migrate", "deploy"]
+    restart: "no"
+
+volumes:
+  pgdata:

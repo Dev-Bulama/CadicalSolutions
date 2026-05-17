@@ -44,7 +44,6 @@ model User {
   serviceContracts   ServiceContract[]
   notifications      Notification[]
 }
-}
 
 model Session {
   id             String   @id @default(cuid()) @map("_id")
