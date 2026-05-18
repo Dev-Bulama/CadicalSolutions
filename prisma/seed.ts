@@ -320,7 +320,7 @@ async function main() {
   const customerUserId = createdUsers["customer"]
 
   if (products.length > 0) {
-    const statuses = ["PENDING", "CONFIRMED", "DELIVERED"] as const
+    const statuses = ["PENDING", "PROCESSING", "DELIVERED"] as const
     for (let i = 0; i < 3; i++) {
       const product = products[i % products.length]
       const qty = Math.floor(Math.random() * 3) + 1
