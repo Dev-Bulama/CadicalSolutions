@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/navbar"
+import { BottomNav } from "@/components/bottom-nav"
 import "./globals.css"
 import { Manrope, Fraunces } from "next/font/google"
 import { Footer } from "@/components/footer"
@@ -55,6 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           <WhatsAppButton />
           <Footer />
+          <BottomNav />
           <Toaster richColors position="top-right" />
         </CartProvider>
         <script
