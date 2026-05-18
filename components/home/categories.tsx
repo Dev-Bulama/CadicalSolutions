@@ -4,7 +4,7 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import {
   Scan, Activity, Heart, Scissors, FlaskConical,
-  Eye, MonitorHeart, Accessibility, Package2
+  Eye, Monitor, Accessibility, Package2
 } from "lucide-react"
 
 const CATS = [
@@ -13,7 +13,7 @@ const CATS = [
   { icon: Heart,         name: "ICU Equipment",  sub: "Ventilators, Monitors",        href: "/products?category=ICU",           color: "bg-red-50 text-red-600 border-red-100" },
   { icon: Scissors,      name: "Surgical",       sub: "Instruments, Electrosurgery",  href: "/products?category=Surgery",       color: "bg-violet-50 text-violet-600 border-violet-100" },
   { icon: FlaskConical,  name: "Laboratory",     sub: "Centrifuges, PCR, Incubators", href: "/products?category=Laboratory",    color: "bg-amber-50 text-amber-600 border-amber-100" },
-  { icon: MonitorHeart,  name: "Monitoring",     sub: "Vital Signs, ECG, Oximetry",   href: "/products?category=Monitoring",    color: "bg-cyan-50 text-cyan-600 border-cyan-100" },
+  { icon: Monitor,       name: "Monitoring",     sub: "Vital Signs, ECG, Oximetry",   href: "/products?category=Monitoring",    color: "bg-cyan-50 text-cyan-600 border-cyan-100" },
   { icon: Eye,           name: "Dental",         sub: "CBCT, Handpieces, Scalers",    href: "/products?category=Dental",        color: "bg-pink-50 text-pink-600 border-pink-100" },
   { icon: Accessibility, name: "Rehabilitation", sub: "Wheelchairs, Therapy",         href: "/products?category=Rehabilitation",color: "bg-orange-50 text-orange-600 border-orange-100" },
   { icon: Package2,      name: "Consumables",    sub: "Gloves, IV Sets, Dressings",   href: "/products?category=Consumables",   color: "bg-slate-50 text-slate-600 border-slate-100" },
