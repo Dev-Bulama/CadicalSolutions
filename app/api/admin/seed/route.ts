@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import prisma from "@/lib/db"
+import prisma from "@/lib/prisma"
 import bcryptjs from "bcryptjs"
 
 const SEED_SECRET = process.env.SEED_SECRET ?? "cadical-seed-2026"
