@@ -1,24 +1,28 @@
 "use client"
 
-import type React from "react"
-
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { authClient } from "@/lib/auth-client"
 import Image from "next/image"
-// import { AlertCircle } from "lucide-react"
-// import { Alert, AlertDescription } from "@/components/ui/alert"
-// import { auth } from "@/lib/auth"
+import { authClient } from "@/lib/auth-client"
+
+const ROLE_REDIRECT: Record<string, string> = {
+  superadmin:  "/admin",
+  admin:       "/admin",
+  technician:  "/technician",
+  clinician:   "/clinician",
+  supplier:    "/supplier",
+  vendor:      "/supplier",
+  hospital:    "/institutional-portal",
+  customer:    "/products",
+  user:        "/products",
+}
 
 export default function LoginPage() {
   const router = useRouter()
-  const [email, setEmail] = useState("")
+  const [email, setEmail]       = useState("")
   const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
+  const [error, setError]       = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -27,114 +31,112 @@ export default function LoginPage() {
     setIsLoading(true)
 
     try {
-      const response = await authClient.signIn.email({
-         email, password,
-         rememberMe: true,
-         callbackURL: "/dashboard"
+      const { data, error: authError } = await authClient.signIn.email({
+        email,
+        password,
+        rememberMe: true,
       })
-      
 
-      if (!response) {
-        throw new Error("Invalid credentials")
+      if (authError) {
+        setError(authError.message ?? "Invalid email or password")
+        return
       }
 
-      
-      // const data = await response.data?.user;
-
-      // Redirect based on role
-      // if (data?.name === "SUPER_ADMIN") {
-      //   router.push("/admin/dashboard")
-      // } else {
-      //   router.push("/clinician/profile")
-      // }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Login failed")
+      if (data?.user) {
+        const role = (data.user as any).role ?? "user"
+        const dest = ROLE_REDIRECT[role] ?? "/products"
+        router.push(dest)
+        router.refresh()
+      }
+    } catch {
+      setError("Login failed. Please try again.")
     } finally {
       setIsLoading(false)
     }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 to-background flex items-center justify-center p-4">
-      <div className="max-w-md w-full space-y-8">
-        {/* Logo */}
-        <div className="text-center space-y-2">
-          <div className="flex justify-center mb-4">
-            {/* <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-2xl">C</span>
-            </div> */}
-            <Image
-              src={'/images/logo.png'} 
-              alt="logo"
-              width={6} height={6} 
-              className="w-8 h-8 rounded-lg flex items-center justify-center" 
-              />
-          </div>
-          <h1 className="text-3xl font-bold">Cadical Solutions</h1>
-          <p className="text-muted-foreground">Sign in to your account</p>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
+
+        {/* Header */}
+        <div className="text-center mb-8">
+          <Link href="/" className="inline-flex items-center gap-2.5 mb-6">
+            <Image src="/images/logo.png" alt="Cadical" width={40} height={40} className="w-10 h-10 rounded-xl" />
+            <div className="text-left">
+              <div className="text-[#1565C0] font-bold text-base">Cadical Solutions</div>
+              <div className="text-slate-400 text-xs">Right Supply. Right Time.</div>
+            </div>
+          </Link>
+          <h1 className="text-2xl font-bold text-slate-900">Welcome back</h1>
+          <p className="text-slate-500 text-sm mt-1">Sign in to your account</p>
         </div>
 
-        {/* Form Card */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Welcome Back</CardTitle>
-            <CardDescription>Sign in with your email and password</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {error && (
-                <p>{error}</p>
-                // <Alert variant="destructive">
-                //   <AlertCircle className="h-4 w-4" />
-                //   <AlertDescription>{error}</AlertDescription>
-                // </Alert>
-              )}
+        {/* Card */}
+        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-8">
+          <form onSubmit={handleSubmit} className="space-y-5">
 
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium">
-                  Email
-                </label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="you@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  disabled={isLoading}
-                />
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-lg">
+                {error}
               </div>
+            )}
 
-              <div className="space-y-2">
-                <label htmlFor="password" className="text-sm font-medium">
-                  Password
-                </label>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  disabled={isLoading}
-                />
-              </div>
-
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Signing in..." : "Sign In"}
-              </Button>
-            </form>
-
-            <div className="mt-6 pt-6 border-t border-border text-center">
-              <p className="text-sm text-muted-foreground">
-                Don't have an account?{" "}
-                <Link href="/auth/register" className="font-medium text-primary hover:underline">
-                  Sign up
-                </Link>
-              </p>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">Email address</label>
+              <input
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                required
+                disabled={isLoading}
+                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1565C0]/20 focus:border-[#1565C0] transition-colors disabled:bg-slate-50"
+              />
             </div>
-          </CardContent>
-        </Card>
+
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="block text-sm font-medium text-slate-700">Password</label>
+                <Link href="/auth/forgot-password" className="text-xs text-[#1565C0] hover:underline">Forgot password?</Link>
+              </div>
+              <input
+                type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                placeholder="••••••••"
+                required
+                disabled={isLoading}
+                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1565C0]/20 focus:border-[#1565C0] transition-colors disabled:bg-slate-50"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-[#1565C0] hover:bg-[#0d47a1] disabled:bg-slate-200 disabled:text-slate-400 text-white font-semibold py-2.5 px-4 rounded-xl text-sm transition-colors"
+            >
+              {isLoading ? "Signing in…" : "Sign In"}
+            </button>
+          </form>
+
+          <p className="text-center text-sm text-slate-500 mt-6">
+            Don't have an account?{" "}
+            <Link href="/auth/register" className="text-[#1565C0] font-semibold hover:underline">Create account</Link>
+          </p>
+        </div>
+
+        {/* Demo credentials hint */}
+        <div className="mt-4 bg-blue-50 border border-blue-100 rounded-xl p-4 text-xs text-slate-600">
+          <p className="font-semibold text-slate-700 mb-2">Demo credentials</p>
+          <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+            <span className="text-slate-500">Admin:</span><span className="font-mono">admin@cadical.com</span>
+            <span className="text-slate-500">Technician:</span><span className="font-mono">technician@cadical.com</span>
+            <span className="text-slate-500">Supplier:</span><span className="font-mono">supplier@cadical.com</span>
+            <span className="text-slate-500">Password:</span><span className="font-mono font-bold text-[#1565C0]">Cadical@2026</span>
+          </div>
+        </div>
+
       </div>
     </div>
   )
