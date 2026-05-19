@@ -106,7 +106,7 @@ export default function CartPage() {
       <div className="bg-[#0D47A1] px-4 md:px-8 py-8">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-2xl font-bold text-white">Shopping Cart</h1>
-          <p className="text-white/60 text-sm mt-1">{0} items in your cart</p>
+          <p className="text-white/60 text-sm mt-1">{cartItems.length} item{cartItems.length !== 1 ? 's' : ''} in your cart</p>
         </div>
       </div>
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-8">
