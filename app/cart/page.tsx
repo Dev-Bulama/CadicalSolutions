@@ -71,7 +71,7 @@ export default function CartPage() {
 
   if (cartItems.length === 0) {
     return (
-      <div className="min-h-screen flex flex-col bg-background">
+      <div className="min-h-screen flex flex-col bg-slate-50 pt-16">
         <div className="flex-1 flex items-center justify-center px-4">
           <div className="text-center">
             <ShoppingCart className="h-16 w-16 mx-auto text-muted-foreground/30 mb-6" />
@@ -102,8 +102,14 @@ export default function CartPage() {
   // ==========================================
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-10">
+    <div className="min-h-screen flex flex-col bg-slate-50 pt-16 pb-24 lg:pb-0">
+      <div className="bg-[#0D47A1] px-4 md:px-8 py-8">
+        <div className="max-w-7xl mx-auto">
+          <h1 className="text-2xl font-bold text-white">Shopping Cart</h1>
+          <p className="text-white/60 text-sm mt-1">{0} items in your cart</p>
+        </div>
+      </div>
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* CART ITEMS */}
 

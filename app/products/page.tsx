@@ -3,7 +3,6 @@
 import { Suspense, useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 
-import { ProductNavbar } from '@/components/product-navbar'
 import { ProductCard } from '@/components/product-card'
 
 import { Input } from '@/components/ui/input'
@@ -214,23 +213,15 @@ function ProductsContent() {
   // ======================================================
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
-      <ProductNavbar />
+    <div className="min-h-screen flex flex-col bg-slate-50">
 
-      {/* ====================================================== */}
-      {/* HERO */}
-      {/* ====================================================== */}
-
-      <section className="border-b bg-gradient-to-r from-primary/10 to-secondary/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <h1 className="text-4xl font-bold tracking-tight">
-            Our Products
-          </h1>
-
-          <p className="mt-3 text-muted-foreground max-w-2xl">
-            Explore medical equipment,
-            consumables, and healthcare
-            products built for modern care.
+      {/* Page header */}
+      <section className="bg-[#0D47A1] pt-24 pb-10 px-4 md:px-8">
+        <div className="max-w-7xl mx-auto">
+          <p className="text-white/60 text-xs font-semibold uppercase tracking-widest mb-2">MediStore</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Medical Equipment &amp; Supplies</h1>
+          <p className="text-white/65 max-w-xl text-sm">
+            Browse 100+ certified medical devices, consumables and healthcare products. Delivered nationwide.
           </p>
         </div>
       </section>
@@ -239,7 +230,7 @@ function ProductsContent() {
       {/* CONTENT */}
       {/* ====================================================== */}
 
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 pb-24 lg:pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* ====================================================== */}
           {/* FILTERS */}
@@ -250,7 +241,7 @@ function ProductsContent() {
               showFilters ? 'block' : 'hidden'
             }`}
           >
-            <div className="border rounded-2xl bg-card p-6 space-y-6 sticky top-24">
+            <div className="border border-slate-100 rounded-2xl bg-white p-5 space-y-5 sticky top-20 shadow-sm">
               {/* MOBILE HEADER */}
 
               <div className="flex items-center justify-between lg:hidden">

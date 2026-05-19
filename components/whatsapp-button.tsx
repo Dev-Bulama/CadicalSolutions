@@ -1,32 +1,34 @@
-"use client";
+"use client"
 
-import { MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react"
+import { useEffect, useState } from "react"
 
 export default function WhatsAppButton() {
-  const phoneNumber = "2347076175550"; // replace with your number (no + sign)
+  const [isMobile, setIsMobile] = useState(false)
 
-  const message = encodeURIComponent(
-    "Hi! I’d like to make an enquiry."
-  );
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 1024)
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
+  }, [])
 
-  const link = `https://wa.me/${phoneNumber}?text=${message}`;
+  const link = `https://wa.me/2347076175550?text=${encodeURIComponent("Hi! I'd like to make an enquiry.")}`
 
   return (
     <a
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50"
+      aria-label="Chat on WhatsApp"
+      className={`fixed right-4 z-[55] transition-all duration-300 ${isMobile ? "bottom-[90px]" : "bottom-6"}`}
     >
       <div className="relative">
-        {/* pulse ring */}
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-30" />
-
-        {/* button */}
-        <div className="relative flex items-center justify-center w-14 h-14 rounded-full bg-green-500 text-white shadow-lg hover:scale-110 transition-transform">
-          <MessageCircle size={26} />
+        <span className="absolute inset-0 animate-ping rounded-full bg-green-400 opacity-25" />
+        <div className="relative flex items-center justify-center w-12 h-12 rounded-full bg-green-500 hover:bg-green-600 text-white shadow-lg hover:scale-110 transition-transform">
+          <MessageCircle size={22} />
         </div>
       </div>
     </a>
-  );
+  )
 }
