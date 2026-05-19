@@ -1,22 +1,15 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { Moon, Sun } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { authClient } from "@/lib/auth-client"
+import { useState } from "react"
 
 export function AdminHeader() {
-  const [user, setUser] = useState<any>(null)
+  const { data: session } = authClient.useSession()
+  const user = session?.user
   const [isDark, setIsDark] = useState(false)
-
-  useEffect(() => {
-    const fetchSession = async () => {
-      const response = await fetch("/api/auth/session")
-      const session = await response.json()
-      setUser(session?.user)
-    }
-    fetchSession()
-  }, [])
 
   const toggleTheme = () => {
     const html = document.documentElement
