@@ -7,13 +7,13 @@ import Image from "next/image"
 import { authClient } from "@/lib/auth-client"
 
 const ROLE_REDIRECT: Record<string, string> = {
-  superadmin:  "/admin",
-  admin:       "/admin",
-  technician:  "/technician",
-  clinician:   "/clinician",
-  supplier:    "/supplier",
-  vendor:      "/supplier",
-  hospital:    "/institutional-portal",
+  superadmin:  "/admin/dashboard",
+  admin:       "/admin/dashboard",
+  technician:  "/technician/jobs",
+  clinician:   "/clinician/dashboard",
+  supplier:    "/supplier/dashboard",
+  vendor:      "/supplier/dashboard",
+  hospital:    "/products",
   customer:    "/products",
   user:        "/products",
 }
